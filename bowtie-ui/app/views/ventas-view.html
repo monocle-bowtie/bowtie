@@ -4,82 +4,15 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-12">
-                        <h1 class="page-header">Ventas</h1>
-                    </div>
-                </div>
-                
-                <div class="input-group form-group form-group-lg col-lg-4 ">
-                  <input type="text" class="form-control" placeholder="Buscar en Stock..." ng-model="stockSearch">
-                  <span class="input-group-btn">
-                    <button class="btn btn-default" type="button">Buscar</button>
-                  </span>
-                </div><!-- /input-group -->
-                <div class="row-fluid custom-btn-padding">
-                    <button class="btn btn-info">Cargar movimientos de caja</button>
-                </div>
-                <div class="row" id="movimiento-caja">
-                    <div class="col-lg-6">
-                        <div class="panel panel-info">
-                            <div class="panel-heading">
-                                <div class="form-group venta-panel-heading">
-                                    <strong>Movimiento de caja</strong>
-                                </div>
-                            </div>
-                            <div class="table-responsive">
-                                <table class="table table-hover table-striped">
-                                    <col style="width:65%">
-                                    <col style="width:20%">
-                                    <col style="width:15%">
-                                    <tbody>
-                                        <tr>
-                                            <td>
-                                                <input ng-model="movimiento.descripcion" id="descripcion" class="form-control" placeholder="Descripción">
-                                            <td>
-                                                <input ng-model="movimiento.monto" id="monto" class="form-control" id"monto" placeholder="Monto">
-                                            </td>
-                                            <td>
-                                               <input class="btn btn-info" type="submit" value=">" ng-click="addMovimientoCaja(movimiento)">
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-5">
-                        <div class="panel panel-info">
-                            <div class="panel-heading">
-                                <div class="form-group venta-panel-heading">
-                                    <strong>Movimientos </strong>{{date}}
-                                </div>
-                            </div>
-                            <div class="table-responsive">
-                                <table class="table table-hover table-striped">
-                                    <tbody>
-                                        <tr ng-repeat="movimiento in movimientosList">
-                                            <td>{{movimiento.descripcion}}</td>
-                                            <td>{{movimiento.monto | currency : symbol : fractionSize}}</td>
-                                            <td>
-                                               <input class="btn btn-danger pull-right" type="submit" value="X" ng-click="removeMovimientoCaja(movimiento)">
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div class="span4 panel-footer">
-                                Total: {{getTotalMovimientosCaja() | currency : symbol : fractionSize}}
-                            <input class="btn btn-info pull-right" type="submit" value="Guardar" ng-click="guardarMovimientosCaja(movimientosList)">
-                        </div>
-                        </div>
+                        <h1 class="page-header">Venta</h1>
                     </div>
                 </div>
 
-                <br>
-                <div class="row">
-                <div class="col-lg-6">
+
+                <div class="col-lg-12">
                     <div class="panel panel-info">
                         <div class="panel-heading">
-                            Stock
+                            Ingresar producto
                         </div>
                     <div class="table-responsive">
                         <table class="table table-hover table-striped">
@@ -89,13 +22,9 @@
                                     <th>Descripción</th>
                                     <th>Precio</th>
                                     <th>Cantidad</th>
-                                    <th>Acciones</th>
                                 </tr>
                              </thead>
-                            <tr ng-repeat="producto in productosList | filter:stockSearch">
-                                <td>{{producto.idProducto}}</td>
-                                <td>{{producto.nombre}}</td>
-                                <td>{{producto.precio | currency : symbol : fractionSize}}</td>
+                            <tr>
                                 <td>
                                     <input type="text" class="form-control" name="number" />
                                 </td>
@@ -108,7 +37,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-5">
+
+                <div class="col-lg-12">
                     <div class="panel panel-info">
                         <div class="panel-heading">
                             <div class="form-group venta-panel-heading">
@@ -142,7 +72,10 @@
                         </div>
                     </div>
                 </div>
-                </div>
+                
+                
+                
+                
             </div>
             <!-- /.container-fluid -->
         </div>
