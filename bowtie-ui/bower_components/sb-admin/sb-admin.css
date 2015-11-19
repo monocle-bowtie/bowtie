@@ -237,6 +237,14 @@ ul.alert-dropdown {
     display: none;  
 }
 
+#detalle-venta {
+    display: none;  
+}
+
+#ver-detalle-productos {
+    display: none;
+}
+
 .datos-producto{
     background-color: #F2F1F1;
 }
@@ -302,6 +310,10 @@ html .ui-autocomplete { width:1px; } /* without this, the menu expands to 100% i
 }
 
 
+.ventas-total {
+    padding: 71px 15px 0 0;
+    color: red;
+}
 
 
 

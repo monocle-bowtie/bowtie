@@ -4,6 +4,9 @@ define(['app'], function (app) {
 			var service = {};
 
         	service.getProductos = getProductos;
+        	service.getMedioPago = getMedioPago;
+        	service.getStock = getStock
+
         	service.guardarMovimientosCaja = guardarMovimientosCaja;
         	service.guardarVenta = guardarVenta;
 
@@ -21,9 +24,33 @@ define(['app'], function (app) {
 				return callback.promise;
 	        }
 
+	        function getMedioPago() {
+	        	var callback = $q.defer();
+        		$http({
+					  method: 'GET',
+					  url: 'http://ec2-52-11-118-155.us-west-2.compute.amazonaws.com/api/MedioPago/get'
+					}).then(function successCallback(response) 
+					{						
+			      		callback.resolve(response.data);
+					});
+				return callback.promise;
+	        }
+
+	        function getStock() {
+	        	var callback = $q.defer();
+        		$http({
+					  method: 'GET',
+					  url: 'http://ec2-52-11-118-155.us-west-2.compute.amazonaws.com/api/stock/get'
+					}).then(function successCallback(response) 
+					{						
+			      		callback.resolve(response.data);
+					});
+				return callback.promise;
+	        }
+
 	        function guardarVenta(obj) {
 
-				console.log('POST: Venta');	
+				
 	        }
 	        
 	        function guardarMovimientosCaja(movimiento, callbackOk, callbackFail) {
