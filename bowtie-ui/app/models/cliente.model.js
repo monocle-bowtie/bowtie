@@ -5,16 +5,16 @@ define(['app'], function (app) {
 
 		Cliente.prototype = 
 		{
-			nombre 		: "",
-	        email  		: "",
-	        telefono 	: "",
-	        notas 		: "",
+			idCliente   : 0,
+			Nombre 		: "",
+	        Email  		: "",
+	        Telefono 	: "",
 	        clearCliente	: function() 
 	        {
-	        	this.nombre = "";
-		        this.email  = "";
-		        this.telefono = "";
-		        this.notas 	= "";
+	        	this.idCliente = 0;
+	        	this.Nombre = "";
+		        this.Email  = "";
+		        this.Telefono = "";
 	        }
 		};
 
