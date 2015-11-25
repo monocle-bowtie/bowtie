@@ -17,7 +17,6 @@ define(['app'], function (app) {
 			        .then(function (response) {
 			            return response;
 			        });
-			        console.log('saveCompra SERVICE');
 	        }
 
 	        function getProveedores() {

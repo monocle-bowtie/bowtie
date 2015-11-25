@@ -3,36 +3,28 @@ define(['app', 'ProveedoresService'], function (app, ProveedoresService) {
     	
     	$scope.proveedoresList = [];
 
-    	$scope.proveedor = {};
-        $scope.proveedor.nombre = "";
-        $scope.proveedor.email = "";
-        $scope.proveedor.telefono = "";
-        $scope.proveedor.notas = "";
+        $scope.proveedor = {};
+        $scope.proveedor.idProveedor = 0;
         
-         var getProveedores = ProveedoresService.getProveedores();
+        var getProveedores = ProveedoresService.getProveedores();
 
-         $timeout(getProveedores.then(function(proveedoresList) {
+        $scope.init = function() {
+            $timeout(getProveedores.then(function(proveedoresList) {
                 $scope.proveedoresList = proveedoresList;
-                $scope.$apply(); 
-            }), 3000);
-
-         $scope.addProveedor = function(proveedor) {
-            var data = {};
-            data.nombre = proveedor.nombre;
-            data.email = proveedor.email;
-            data.telefono = proveedor.telefono;
-            data.notas = proveedor.notas;
-            $scope.proveedoresList.push(data);
-            clearProveedor();
+            }), 1000);
         }
+         
+        $scope.saveProveedores = function(p) {
+            //Agrego el proveedor a la lista
+            var proveedor = {};
+            proveedor.nombre = p.Nombre;
+            proveedor.mail = p.Mail;
+            proveedor.direccion = p.Direccion;
+            proveedor.telefono = p.Telefono;
+            $scope.proveedoresList.push(proveedor);
 
-
-        function clearProveedor() {
-            $scope.proveedor = {};
-            $scope.proveedor.nombre = "";
-            $scope.proveedor.email = "";
-            $scope.proveedor.telefono = "";
-            $scope.proveedor.notas = "";
+            //Guardo el proveedor
+            ProveedoresService.saveProveedores(angular.toJson($scope.proveedor));
         }
 
     });

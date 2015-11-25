@@ -60,6 +60,7 @@ define(['app', 'ComprasService', 'AutocompleteDirective', 'ProductoModel'], func
             compraDetalle.Cantidad = parseInt(prod.cantidad);
             compraDetalle.PrecioUnitario = parseInt(prod.costo);
             compraDetalle.PrecioTotal = 0;
+            compraDetalle.CodigoBarras = prod.Codigo;
             $scope.compra.CompraDetalle.push(compraDetalle);
         }
 

@@ -9,8 +9,9 @@ define(['app', 'VentasService'], function (app, VentasService) {
         $scope.cantidadFilas = 10;
 
         $scope.venta = {};
-        $scope.ventaDetalle = [];
+        $scope.venta.VentaDetalle = [];
 
+        $scope.producto = {};
 
         var getStock = VentasService.getStock();
         var getProductos = VentasService.getProductos();
@@ -20,6 +21,7 @@ define(['app', 'VentasService'], function (app, VentasService) {
 
 
         $scope.init = function() {
+
             $timeout(getStock.then(function(stockList) {
                 $scope.stockList = stockList;
             }), 1000);
@@ -31,19 +33,27 @@ define(['app', 'VentasService'], function (app, VentasService) {
             $timeout(getMedioPago.then(function(medioPagoList) {
                 $scope.medioPagoList = medioPagoList;
             }), 1000);
-            
         }
         
-        $scope.addProducto = function(prod){
+        $scope.addProducto = function(producto) {
+
             var ventaDetalle = {};
+            ventaDetalle.descripcion = producto.nombre;
             ventaDetalle.idVenta = 0;
             ventaDetalle.idVentaDetalle = 0;
-            ventaDetalle.idProducto = prod.idProducto;
-            ventaDetalle.PrecioUnitario = prod.PrecioLista;
-            ventaDetalle.Cantidad = 1;
-            ventaDetalle.PrecioFinal = prod.precioLista * prod.Cantidad;
+            ventaDetalle.idProducto = producto.idProducto;
+            ventaDetalle.PrecioUnitario = producto.PrecioLista;
+
+            if(producto.cantidad === undefined) {
+                producto.cantidad = 1;
+            }
+            ventaDetalle.cantidad = producto.cantidad;
+            
+            ventaDetalle.Cantidad = producto.cantidad;
+            ventaDetalle.PrecioFinal = producto.precioLista * producto.Cantidad;
             ventaDetalle.Estado = "A";
-            $scope.venta.ventaDetalle.push(ventaDetalle);
+            
+            $scope.venta.VentaDetalle.push(ventaDetalle);
 
         }
 
