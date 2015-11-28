@@ -1,7 +1,6 @@
 define(['app'], function (app) {
 	app.factory('ComprasService',  ['$http', '$q', '$rootScope', '$resource',
 		function( $http, $q, $rootScope, $resource) {
-
 			var service = {};
 
 			service.getProveedores = getProveedores;

@@ -41,7 +41,7 @@
                                                     <span class="glyphicon glyphicon-usd"></span>
                                                 </span>
                                                 <select class="form-control"
-                                                        ng-model="compra.idMedioPago"
+                                                        ng-model="venta.idMedioPago"
                                                         ng-options="medioPago.idMedioPago as medioPago.descripcion for medioPago in medioPagoList">
                                                          <option value="">Medio de pago</option>
                                                 </select>
@@ -54,11 +54,9 @@
                                                     <span class="glyphicon glyphicon-user"></span>
                                                 </span>
                                                 <select class="form-control"
-                                                        ng-model="compra.idMedioPago">
-                                                         <option value="">Consumidor final</option>
-                                                         <option value="">Cliente 1</option>
-                                                         <option value="">Cliente 2</option>
-                                                         <option value="">Cliente 3</option>
+                                                        ng-model="venta.idCliente"
+                                                        ng-options="cliente.idCliente as cliente.nombre for cliente in clientesList">
+                                                        <option value="">Elija un cliente</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -147,7 +145,10 @@
                                         <td>{{producto.precio | currency : symbol : fractionSize}}</td>
                                         <td></td>
                                         <td>
-                                           <input class="btn btn-danger pull-right" type="submit" value="X" ng-click="removeProducto(producto)">
+                                           <input class="btn btn-danger pull-right" 
+                                                  type="submit" 
+                                                  value="X" 
+                                                  ng-click="removeProducto(producto)">
                                         </td>
                                     </tr>
                                 </tbody>
@@ -155,7 +156,7 @@
                         </div>
                         <div class="span4 panel-footer">
                             Total: {{getTotalVenta() | currency : symbol : fractionSize}}
-                            <input class="btn btn-info pull-right" type="submit" value="Confirmar" ng-click="guardarVenta(productosVenta)">
+                            <input class="btn btn-info pull-right" type="submit" value="Confirmar" ng-click="saveVenta(productosVenta)">
                         </div>
                     </div>
                 </div>

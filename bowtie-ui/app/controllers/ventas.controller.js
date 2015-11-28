@@ -5,23 +5,34 @@ define(['app', 'VentasService'], function (app, VentasService) {
         $scope.productosList = [];
         $scope.productosConCantidadList = [];
         $scope.medioPagoList = [];
+        $scope.clientesList = [];
 
         $scope.cantidadFilas = 10;
 
+        //Cabecera de venta
         $scope.venta = {};
+        $scope.venta.idVenta = 0;
+        $scope.venta.idVendedor = 2;
+        $scope.venta.idCliente = 1;
+        $scope.venta.Fecha = Date.today();
+        $scope.venta.Total = 100;
+        $scope.venta.totalpromocion = 20;
+        $scope.venta.Estado = "A";
+        $scope.venta.idMedioPago = 1;
+        $scope.venta.idSucursal = 1;
+        $scope.venta.NroTicket = "111";
+
         $scope.venta.VentaDetalle = [];
+        $scope.venta.VentaPromoDetalle = [];
 
         $scope.producto = {};
 
         var getStock = VentasService.getStock();
         var getProductos = VentasService.getProductos();
         var getMedioPago = VentasService.getMedioPago();
-
-        var guardarVenta = VentasService.guardarVenta();
-
+        var getClientes = VentasService.getClientes();
 
         $scope.init = function() {
-
             $timeout(getStock.then(function(stockList) {
                 $scope.stockList = stockList;
             }), 1000);
@@ -33,6 +44,15 @@ define(['app', 'VentasService'], function (app, VentasService) {
             $timeout(getMedioPago.then(function(medioPagoList) {
                 $scope.medioPagoList = medioPagoList;
             }), 1000);
+
+            $timeout(getClientes.then(function(clientesList) {
+                $scope.clientesList = clientesList;
+            }), 1000); 
+        }
+
+        $scope.saveVenta = function(venta) {
+            //console.log(angular.toJson($scope.venta));
+            VentasService.saveVenta(angular.toJson($scope.venta));
         }
         
         $scope.addProducto = function(producto) {
@@ -52,14 +72,14 @@ define(['app', 'VentasService'], function (app, VentasService) {
             ventaDetalle.Cantidad = producto.cantidad;
             ventaDetalle.PrecioFinal = producto.precioLista * producto.Cantidad;
             ventaDetalle.Estado = "A";
-            
+
             $scope.venta.VentaDetalle.push(ventaDetalle);
 
         }
 
         $scope.removeProducto = function(obj) {
             if(obj != -1) {
-                $scope.productosVenta.splice(obj, 1);
+                $scope.venta.VentaDetalle.splice(obj, 1);
             }
         }
 

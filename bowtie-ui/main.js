@@ -20,6 +20,7 @@ require.config({
         'metisMenu': 'metisMenu/dist/metisMenu.min',
         'datepicker': 'datepicker/bootstrap-datepicker',
         'moment': 'moment/moment',
+        'date':'date/date',
         //Services
         'LoginService': '../app/services/login-service',
         'VentasService': '../app/services/ventas-service',
@@ -28,6 +29,8 @@ require.config({
         'ClientesService': '../app/services/clientes-service',
         'StockService': '../app/services/stock-service',
         'PreciosConfigService': '../app/services/precios-config-service',
+        'CajaService': '../app/services/caja-service',
+        'HomeService': '../app/services/home-service',
         // directives
         'AutocompleteDirective': '../app/directives/autocomplete.directive',
         // Models

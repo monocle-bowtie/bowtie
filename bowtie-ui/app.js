@@ -8,7 +8,8 @@ define(['angularAMD',
 		'jquery-ui', 
 		'bootstrap',
 		'metisMenu',
-		'datepicker'], 
+		'datepicker',
+		'date'], 
 		function (angularAMD, anguarRoute, angularCookies, angularResource, angularMocks, $, jqueryFittext, jqueryUi, bootstrap) {
 		    
 		    var app = angular.module("webapp", ['ngRoute','angular-cookies', 'ngResource']);
@@ -61,6 +62,11 @@ define(['angularAMD',
 		        $routeProvider.when("/precios-config", angularAMD.route({
 		            templateUrl: 'app/views/precios-config-view.html', controller: 'PreciosConfigCtrl',
 		            controllerUrl: '../app/controllers/precios.config.controller'
+		        }));
+
+		        $routeProvider.when("/caja", angularAMD.route({
+		            templateUrl: 'app/views/caja-view.html', controller: 'CajaCtrl',
+		            controllerUrl: '../app/controllers/caja.controller'
 		        }));
 		    });
 		      

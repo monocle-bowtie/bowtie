@@ -5,12 +5,25 @@ define(['app'], function (app) {
 
         	service.getProductos = getProductos;
         	service.getMedioPago = getMedioPago;
-        	service.getStock = getStock
+        	service.getStock = getStock;
+        	service.getClientes = getClientes;
 
         	service.guardarMovimientosCaja = guardarMovimientosCaja;
-        	service.guardarVenta = guardarVenta;
+        	service.saveVenta = saveVenta;
 
         	return service;
+
+        	function getClientes() {
+	        	var callback = $q.defer();
+        		$http({
+					  method: 'GET',
+					  url: 'http://ec2-52-11-118-155.us-west-2.compute.amazonaws.com/api/cliente/get'
+					}).then(function successCallback(response) 
+					{						
+			      		callback.resolve(response.data);
+					});
+				return callback.promise;
+	        }
 
 	        function getProductos() {
 	        	var callback = $q.defer();
@@ -48,8 +61,12 @@ define(['app'], function (app) {
 				return callback.promise;
 	        }
 
-	        function guardarVenta(obj) {
-
+	        function saveVenta(venta) {
+	        	return $http.post("http://ec2-52-11-118-155.us-west-2.compute.amazonaws.com/api/Venta/post",
+			        venta)
+			        .then(function (response) {
+			            return response;
+			        });
 				
 	        }
 	        
