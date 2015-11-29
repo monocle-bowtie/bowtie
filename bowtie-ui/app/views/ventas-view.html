@@ -86,8 +86,7 @@
                                         <th>Código</th>
                                         <th>Stock</th>
                                         <th>Descripcion</th>
-                                        <th>Precio de lista</th>
-                                        <th>Precio en efectivo</th>
+                                        <th>Precio</th>
                                         <th>Cantidad</th>
                                         <th>Agregar</th>
                                         
@@ -102,7 +101,6 @@
                                         <td>{{producto.stock}}</td>
                                         <td>{{producto.nombre}}</td>
                                         <td>{{producto.precioLista | currency : symbol : fractionSize}}</td>
-                                        <td>{{producto.precioContado | currency : symbol : fractionSize}}</td>
                                         <td>
                                             <div class="col-lg-4">
                                                 <input type="text" 

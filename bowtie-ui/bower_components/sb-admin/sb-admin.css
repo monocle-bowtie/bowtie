@@ -16,6 +16,10 @@ body {
     }
 }
 
+.btn {
+    margin-bottom:3px;
+}
+
 #wrapper {
     padding-left: 0;
 }
