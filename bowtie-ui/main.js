@@ -31,6 +31,7 @@ require.config({
         'PreciosConfigService': '../app/services/precios-config-service',
         'CajaService': '../app/services/caja-service',
         'HomeService': '../app/services/home-service',
+        'PromocionesService': '../app/services/promociones-service',
         // directives
         'AutocompleteDirective': '../app/directives/autocomplete.directive',
         // Models

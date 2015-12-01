@@ -68,6 +68,12 @@ define(['angularAMD',
 		            templateUrl: 'app/views/caja-view.html', controller: 'CajaCtrl',
 		            controllerUrl: '../app/controllers/caja.controller'
 		        }));
+
+		        $routeProvider.when("/promociones", angularAMD.route({
+		            templateUrl: 'app/views/promociones-view.html', controller: 'PromocionesCtrl',
+		            controllerUrl: '../app/controllers/promociones.controller'
+		        }));
+
 		    });
 		      
 		    return angularAMD.bootstrap(app);

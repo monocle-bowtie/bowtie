@@ -4,6 +4,7 @@ define(['app', 'ComprasService', 'AutocompleteDirective', 'ProductoModel'], func
         $scope.productosList = [];
         $scope.proveedoresList = [];
         $scope.medioPagoList = [];
+        $scope.gruposList = [];
 
         $scope.producto = new ProductoModel();
         $scope.productos = { autocomplete: [] };
@@ -11,6 +12,7 @@ define(['app', 'ComprasService', 'AutocompleteDirective', 'ProductoModel'], func
         $scope.compra = {};
         $scope.compra.idCompra = 0;
         $scope.compra.idProveedor = 0;
+        $scope.compra.idGrupo = 0;
         $scope.compra.Fecha = "";
         $scope.compra.Total = 0;
         $scope.compra.Estado = "A";
@@ -21,6 +23,7 @@ define(['app', 'ComprasService', 'AutocompleteDirective', 'ProductoModel'], func
         var getProveedores = ComprasService.getProveedores();
         var getProductos = ComprasService.getProductos();
         var getMedioPago = ComprasService.getMedioPago();
+        var getCategorias = ComprasService.getCategorias();
 
         $scope.init = function() {
             $timeout(getProveedores.then(function(proveedoresList) {
@@ -36,6 +39,10 @@ define(['app', 'ComprasService', 'AutocompleteDirective', 'ProductoModel'], func
 
             $timeout(getMedioPago.then(function(medioPagoList) {
                 $scope.medioPagoList = medioPagoList;
+            }), 1000);
+
+            $timeout(getCategorias.then(function(gruposList) {
+                $scope.gruposList = gruposList;
             }), 1000);
         }
 

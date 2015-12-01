@@ -17,12 +17,15 @@
                                         <strong>Compra</strong>
                                     </div>
                                 </div>
-                                <form class="form-inline" role="form">
+                                <form name="compraForm" class="form-inline" role="form">
                                     <div class="row">
                                         <div class="col-xs-3">
                                             <div class="input-group">
                                                 <span class="input-group-addon"><span class="glyphicon glyphicon-barcode"></span></span>
-                                                <input type="text" ng-model="compra.NroFactura" class="form-control" placeholder="N° de factura">
+                                                <input type="text" 
+                                                       ng-model="compra.NroFactura" 
+                                                       class="form-control" 
+                                                       placeholder="N° de factura">
                                             </div>
                                         </div>
                                         <div class="col-xs-3">
@@ -71,11 +74,9 @@
                                                     <span class="glyphicon glyphicon-user"></span>
                                                 </span>
                                                 <select class="form-control"
-                                                        ng-options="proveedor.idProveedor as proveedor.nombre for proveedor in proveedoresList">
+                                                        ng-model="compra.idGrupo"
+                                                        ng-options="grupo.idGrupo as grupo.descripcion for grupo in gruposList">
                                                          <option value="">Elija una Categoría</option>
-                                                         <option value="">Bebidas</option>
-                                                         <option value="">Vinos</option>
-                                                         <option value="">Naturales del Sur</option>
                                                 </select>
                                                 
                                             </div>
@@ -101,24 +102,37 @@
                                                         <td>
                                                             <input ng-model="producto.Codigo"
                                                                    class="form-control" 
-                                                                   placeholder="Código de barras">
+                                                                   placeholder="Código de barras"
+                                                                   >
                                                         </td>
                                                         <td>
-                                                            <input ng-model="producto.NombreProducto" 
+                                                            <input ng-model="producto.NombreProducto"
                                                                    data="productos.autocomplete" 
                                                                    autocomplete 
                                                                    id="NombreProducto" 
+                                                                   class="form-control"
+                                                                   placeholder="Ingrese el nombre del producto"
+                                                                   >
+                                                        </td>
+                                                        <td>
+                                                            <input ng-model="producto.costo"
+                                                                   id="costo" 
+                                                                   class="form-control"
+                                                                   placeholder="Costo"
+                                                                   >
+                                                        </td>
+                                                        <td>
+                                                            <input ng-model="producto.cantidad"
+                                                                   id="cantidad" 
                                                                    class="form-control" 
-                                                                   placeholder="Ingrese el nombre del producto">
+                                                                   placeholder="Cantidad"
+                                                                   >
                                                         </td>
                                                         <td>
-                                                            <input ng-model="producto.costo" id="costo" class="form-control" id"costo" placeholder="Costo">
-                                                        </td>
-                                                        <td>
-                                                            <input ng-model="producto.cantidad" id="cantidad" class="form-control" id"costo" placeholder="Cantidad">
-                                                        </td>
-                                                        <td>
-                                                           <input class="btn btn-info" type="submit" value=">" ng-click="addProducto(producto)">
+                                                           <input class="btn btn-info" 
+                                                                  type="submit" 
+                                                                  value=">" 
+                                                                  ng-click="addProducto(producto)">
                                                         </td>
                                                     </tr>
                                                 </tbody>
