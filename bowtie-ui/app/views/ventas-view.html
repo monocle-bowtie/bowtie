@@ -6,9 +6,13 @@
                     <div class="col-lg-6">
                         <h1 class="page-header">Ventas</h1>
                     </div>
+
                     <div class="ventas-total col-lg-6">
-                        <h1 class="pull-right">Total: $1400.18</h1>
+                        <h1 class="pull-right">Total: {{totalVenta | currency : symbol : fractionSize}}</h1>
                     </div>
+                    <div class="span4 panel-footer">
+                            <input class="btn btn-info pull-right" type="submit" value="Confirmar" ng-click="saveVenta(productosVenta)">
+                        </div>
                 </div>
 
                 <div class="col-lg-12">
@@ -41,9 +45,9 @@
                                                     <span class="glyphicon glyphicon-usd"></span>
                                                 </span>
                                                 <select class="form-control"
+                                                        id="medioPago"
                                                         ng-model="venta.idMedioPago"
                                                         ng-options="medioPago.idMedioPago as medioPago.descripcion for medioPago in medioPagoList">
-                                                         <option value="">Medio de pago</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -56,7 +60,6 @@
                                                 <select class="form-control"
                                                         ng-model="venta.idCliente"
                                                         ng-options="cliente.idCliente as cliente.nombre for cliente in clientesList">
-                                                        <option value="">Elija un cliente</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -65,14 +68,7 @@
                     </div>
                 </div>
 
-
-
-                <div class="row-fluid custom-btn-padding">
-                    <button id="ver-detalle-venta" class="btn btn-info">Ver detalle de venta</button>
-                    <button id="ver-detalle-productos" class="btn btn-info">Ver listado de productos</button>
-                </div>
-
-                <div class="col-lg-12" id="detalle-productos">
+                <div class="col-lg-6" id="detalle-productos">
                     <div class="panel panel-info">
                         <div class="panel-heading">
                             <div class="form-group venta-panel-heading">
@@ -81,6 +77,12 @@
                         </div>
                         <div class="table-responsive">
                             <table class="table table-hover table-striped">
+                                <col style="width:20%">
+                                <col style="width:10%">
+                                <col style="width:35%">
+                                <col style="width:10%">
+                                <col style="width:20%">
+                                <col style="width:5%">
                                 <thead>
                                     <tr>
                                         <th>Código</th>
@@ -89,20 +91,24 @@
                                         <th>Precio</th>
                                         <th>Cantidad</th>
                                         <th>Agregar</th>
-                                        
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr ng-repeat="producto in productosList 
+                                    <tr ng-repeat="producto in productosList
                                                   | filter:nombreSearch
                                                   | filter:codigoSearch 
                                                   | limitTo:cantidadFilas">
                                         <td>{{producto.codigoBarras}}</td>
-                                        <td>{{producto.stock}}</td>
+                                        <td ng-style="{'color':(producto.stock<0?'red':'blue')}">{{producto.stock}}</td>
                                         <td>{{producto.nombre}}</td>
-                                        <td>{{producto.precioLista | currency : symbol : fractionSize}}</td>
+                                        <td ng-hide="venta.idMedioPago==1 || venta.idMedioPago==0">
+                                            {{producto.precioLista | currency : symbol : fractionSize}}
+                                        </td>
+                                        <td ng-hide="venta.idMedioPago==2 || venta.idMedioPago==3">
+                                            {{producto.precioContado | currency : symbol : fractionSize}}
+                                        </td>
                                         <td>
-                                            <div class="col-lg-4">
+                                            <div class="col-lg-12">
                                                 <input type="text" 
                                                        ng-model="producto.cantidad"
                                                        class="form-control" 
@@ -119,7 +125,7 @@
                     </div>
                 </div>
 
-                <div class="col-lg-12" id="detalle-venta">
+                <div class="col-lg-6" id="detalle-venta">
                     <div class="panel panel-info">
                         <div class="panel-heading">
                             <div class="form-group venta-panel-heading">
@@ -128,19 +134,22 @@
                         </div>
                         <div class="table-responsive">
                             <table class="table table-hover table-striped">
+                                <col style="width:50%">
+                                <col style="width:20%">
+                                <col style="width:20%">
+                                <col style="width:10%">
                                 <thead>
                                     <tr>
                                         <th>Producto</th>
                                         <th>Cantidad</th>
-                                        <th>Precio Unitario</th>
-                                        <th>Precio Final</th>
+                                        <th>Precio</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr ng-repeat="producto in venta.VentaDetalle">
                                         <td>{{producto.descripcion}}</td>
                                         <td>{{producto.cantidad}}</td>
-                                        <td>{{producto.precio | currency : symbol : fractionSize}}</td>
+                                        <td>{{producto.PrecioFinal | currency : symbol : fractionSize}}</td>
                                         <td></td>
                                         <td>
                                            <input class="btn btn-danger pull-right" 
@@ -152,10 +161,7 @@
                                 </tbody>
                             </table>
                         </div>
-                        <div class="span4 panel-footer">
-                            Total: {{getTotalVenta() | currency : symbol : fractionSize}}
-                            <input class="btn btn-info pull-right" type="submit" value="Confirmar" ng-click="saveVenta(productosVenta)">
-                        </div>
+                       
                     </div>
                 </div>
                 

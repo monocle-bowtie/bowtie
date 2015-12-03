@@ -36,7 +36,7 @@
                             <tr ng-repeat="producto in stockList | filter:stockSearch">
                                 <td>{{producto.productoDescripcion}}</td>
                                 <td>{{producto.precio | currency : symbol : fractionSize}}</td>
-                                <td>{{producto.cantidad}}</td>
+                                <td ng-style="{'color':(producto.cantidad<0?'red':'blue')}">{{producto.cantidad}}</td>
                             </tr>
                         </table>
                         </div>

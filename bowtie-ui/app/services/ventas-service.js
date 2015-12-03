@@ -30,8 +30,7 @@ define(['app'], function (app) {
         		$http({
 					  method: 'GET',
 					  url: 'http://ec2-52-11-118-155.us-west-2.compute.amazonaws.com/api/productos/get'
-					}).then(function successCallback(response) 
-					{						
+					}).then(function successCallback(response) {
 			      		callback.resolve(response.data);
 					});
 				return callback.promise;

@@ -171,7 +171,7 @@
                                             <tr>
                                                 <td>{{mov.tipoMovimiento}}</td>
                                                 <td>{{mov.descripcion}}</td>
-                                                <td>{{mov.monto}}</td>
+                                                <td>{{mov.monto | currency : symbol : fractionSize}}</td>
                                             </tr>
                                         </tbody>
                                     </table>

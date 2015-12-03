@@ -241,14 +241,6 @@ ul.alert-dropdown {
     display: none;  
 }
 
-#detalle-venta {
-    display: none;  
-}
-
-#ver-detalle-productos {
-    display: none;
-}
-
 .datos-producto{
     background-color: #F2F1F1;
 }
