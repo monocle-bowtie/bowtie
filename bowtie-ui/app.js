@@ -69,7 +69,7 @@ define(['angularAMD',
 		            controllerUrl: '../app/controllers/caja.controller'
 		        }));
 
-		        $routeProvider.when("/promociones", angularAMD.route({
+		        $routeProvider.when("/promociones-config", angularAMD.route({
 		            templateUrl: 'app/views/promociones-view.html', controller: 'PromocionesCtrl',
 		            controllerUrl: '../app/controllers/promociones.controller'
 		        }));

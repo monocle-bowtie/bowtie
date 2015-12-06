@@ -237,10 +237,6 @@ ul.alert-dropdown {
 	display:none;
 }
 
-#detalle-compra {
-    display: none;  
-}
-
 .datos-producto{
     background-color: #F2F1F1;
 }
@@ -311,5 +307,10 @@ html .ui-autocomplete { width:1px; } /* without this, the menu expands to 100% i
     color: red;
 }
 
+#listado-promociones {
+    display: none;
+}
 
-
+#volver {
+    display: none;
+}

@@ -47,7 +47,11 @@ define(['app', 'ComprasService', 'AutocompleteDirective', 'ProductoModel'], func
         }
 
         $scope.saveCompra = function() {
+            for(var i in  $scope.compra.CompraDetalle) {
+                 $scope.compra.Total += $scope.compra.CompraDetalle[i].PrecioTotal;
+            }
             ComprasService.saveCompra(angular.toJson($scope.compra));
+            //console.log(angular.toJson($scope.compra));
         }
 
         $scope.addProducto = function(prod) {
@@ -66,7 +70,7 @@ define(['app', 'ComprasService', 'AutocompleteDirective', 'ProductoModel'], func
             compraDetalle.NombreProducto = prod.NombreProducto;
             compraDetalle.Cantidad = parseInt(prod.cantidad);
             compraDetalle.PrecioUnitario = parseInt(prod.costo);
-            compraDetalle.PrecioTotal = 0;
+            compraDetalle.PrecioTotal = prod.costo * prod.cantidad;
             compraDetalle.CodigoBarras = prod.Codigo;
             $scope.compra.CompraDetalle.push(compraDetalle);
         }
@@ -81,7 +85,7 @@ define(['app', 'ComprasService', 'AutocompleteDirective', 'ProductoModel'], func
                     compraDetalle.NombreProducto = prod.NombreProducto;
                     compraDetalle.Cantidad = parseInt(prod.cantidad);
                     compraDetalle.PrecioUnitario = parseInt(prod.costo);
-                    compraDetalle.PrecioTotal = 0;
+                    compraDetalle.PrecioTotal = prod.costo * prod.cantidad;
                     $scope.compra.CompraDetalle.push(compraDetalle);
                     return true;
                 } 

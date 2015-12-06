@@ -7,6 +7,7 @@ define(['app'], function (app) {
         	service.getMedioPago = getMedioPago;
         	service.getStock = getStock;
         	service.getClientes = getClientes;
+        	service.getPromociones = getPromociones;
 
         	service.guardarMovimientosCaja = guardarMovimientosCaja;
         	service.saveVenta = saveVenta;
@@ -60,10 +61,23 @@ define(['app'], function (app) {
 				return callback.promise;
 	        }
 
+	         function getPromociones() {
+	        	var callback = $q.defer();
+        		$http({
+					  method: 'GET',
+					  url: 'http://ec2-52-11-118-155.us-west-2.compute.amazonaws.com/api/promocion/getpromodetalle'
+					}).then(function successCallback(response) 
+					{						
+			      		callback.resolve(response.data);
+					});
+				return callback.promise;
+	        }
+
 	        function saveVenta(venta) {
 	        	return $http.post("http://ec2-52-11-118-155.us-west-2.compute.amazonaws.com/api/Venta/post",
 			        venta)
 			        .then(function (response) {
+			        	alert('La venta se guardó exitosamente');
 			            return response;
 			        });
 				

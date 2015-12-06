@@ -27,6 +27,7 @@ define(['app'], function (app) {
 	        	return $http.post("http://ec2-52-11-118-155.us-west-2.compute.amazonaws.com/api/Compra/post",
 			        compra)
 			        .then(function (response) {
+			        	alert('La compra se guardó exitosamente');
 			            return response;
 			        });
 	        }

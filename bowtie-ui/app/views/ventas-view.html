@@ -11,7 +11,12 @@
                         <h1 class="pull-right">Total: {{totalVenta | currency : symbol : fractionSize}}</h1>
                     </div>
                     <div class="span4 panel-footer">
-                            <input class="btn btn-info pull-right" type="submit" value="Confirmar" ng-click="saveVenta(productosVenta)">
+                            <input data-wow-delay="1.5s"
+                                   id="confirmar"
+                                   class="btn btn-info pull-right bounceInRight animated" 
+                                   type="submit" 
+                                   value="Confirmar" 
+                                   ng-click="saveVenta(productosVenta)">
                         </div>
                 </div>
 

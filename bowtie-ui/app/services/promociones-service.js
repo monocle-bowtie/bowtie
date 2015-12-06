@@ -3,25 +3,25 @@ define(['app'], function (app) {
 		function( $http, $q, $rootScope, $resource) {
 
 			var service = {};
-			service.getCaja = getCaja;
-			service.getPromoDetalle = getPromoDetalle;
+			
+			service.getListadoPromociones = getListadoPromociones;
 			service.savePromo = savePromo;
+			service.getProductos = getProductos;
 
         	return service;
 
-        	function getCaja() {
+        	function getProductos() {
 	        	var callback = $q.defer();
         		$http({
 					  method: 'GET',
-					  url: 'http://ec2-52-11-118-155.us-west-2.compute.amazonaws.com/api/promocion/get'
-					}).then(function successCallback(response) 
-					{						
+					  url: 'http://ec2-52-11-118-155.us-west-2.compute.amazonaws.com/api/productos/get'
+					}).then(function successCallback(response) {
 			      		callback.resolve(response.data);
 					});
 				return callback.promise;
 	        }
 
-	        function getPromoDetalle() {
+	        function getListadoPromociones() {
 	        	var callback = $q.defer();
         		$http({
 					  method: 'GET',

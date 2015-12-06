@@ -7,10 +7,12 @@ define(['app', 'VentasService'], function (app, VentasService) {
         $scope.productosConCantidadList = [];
         $scope.medioPagoList = [];
         $scope.clientesList = [];
+        $scope.promocionesList = [];
         /*************************************************************/
         //Helpers
         $scope.cantidadFilas = 10;
         $scope.totalVenta = 0;
+        $scope.descuentoPromocion = 0;
         $scope.producto = {};
         /*************************************************************/
         //Cabecera de venta
@@ -35,6 +37,7 @@ define(['app', 'VentasService'], function (app, VentasService) {
         var getStock = VentasService.getStock();
         var getMedioPago = VentasService.getMedioPago();
         var getClientes = VentasService.getClientes();
+        var getPromociones = VentasService.getPromociones();
 
         var getProductos = VentasService.getProductos();
 
@@ -59,14 +62,41 @@ define(['app', 'VentasService'], function (app, VentasService) {
             getClientes.then(function(clientesList) {
                 $scope.clientesList = clientesList;
             });
+
+            getPromociones.then(function(promocionesList) {
+                $scope.promocionesList = promocionesList;
+            });
         }
 
         $scope.saveVenta = function(venta) {
             $scope.venta.Total = $scope.totalVenta;
+            //checkPromociones($scope.venta);
+            //console.log(angular.toJson($scope.venta));
             VentasService.saveVenta(angular.toJson($scope.venta));
+
+        }
+
+        function checkPromociones(venta) {
+            var promocionesCandidatas = [];
+            var promocionesEjecutadas = [];
+
+            for(var i in $scope.venta.VentaDetalle) {
+                for(var x in $scope.promocionesList) {
+                    for(var z in $scope.promocionesList[x].promoProducto){
+                        if($scope.venta.VentaDetalle[i].idProducto ===  $scope.promocionesList[x].promoProducto[z].idProducto) {
+                            promocionesCandidatas.push($scope.promocionesList[x]);
+
+                            //$scope.venta.totalpromocion = $scope.promocionesList[x].precio * $scope.venta.VentaDetalle[i].cantidad;
+                        }
+                    }
+                }
+            }
+
+            console.log(angular.toJson(promocionesCandidatas));
         }
         
         $scope.addProducto = function(producto) {
+            
             var existe = addToList(producto);
             if (existe) {
                 for(var i in $scope.venta.VentaDetalle) {
@@ -134,7 +164,7 @@ define(['app', 'VentasService'], function (app, VentasService) {
             $scope.totalVenta -= obj.PrecioFinal;
         }
 
-        $( "#medioPago" ).change(function() {
+        function refreshVenta() {
             $scope.venta = {};
             $scope.venta.idVenta = 0;
             $scope.venta.idVendedor = 2;
@@ -150,6 +180,12 @@ define(['app', 'VentasService'], function (app, VentasService) {
             $scope.venta.VentaDetalle = [];
             $scope.venta.VentaPromoDetalle = [];
             $scope.totalVenta = 0;
-        });  
+        }
+
+        $( "#medioPago" ).change(function() {
+            refreshVenta();
+        });
+
+
     });
 });
