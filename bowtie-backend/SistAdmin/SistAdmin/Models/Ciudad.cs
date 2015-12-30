@@ -31,7 +31,7 @@ namespace SistAdmin.Models
         public int UsuarioAlta { get; set; }
         public Nullable<System.DateTime> FechaBaja { get; set; }
         public Nullable<int> UsuarioBaja { get; set; }
-    
+        [JsonIgnore]
         public virtual Provincia Provincia { get; set; }
         [JsonIgnore]
         public virtual ICollection<Cliente> Cliente { get; set; }

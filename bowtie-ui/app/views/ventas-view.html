@@ -6,11 +6,20 @@
                     <div class="col-lg-6">
                         <h1 class="page-header">Ventas</h1>
                     </div>
-
-                    <div class="ventas-total col-lg-6">
-                        <h1 class="pull-right">Total: {{totalVenta | currency : symbol : fractionSize}}</h1>
+                    <div class="ventas-total-custom col-lg-3 pull-right">
+                        <p>
+                            Precio Total Contado: <strong>{{totalVentaContado | currency : symbol : fractionSize}}</strong>
+                        </p>
+                        
+                        <p>
+                            Precio Total Lista: <strong>{{totalVentaLista | currency : symbol : fractionSize}}</strong>
+                        </p>
+                        
+                        <p>
+                            Precio Total Gremio: <strong>{{totalVentaGremio | currency : symbol : fractionSize}}</strong>
+                        </p>
                     </div>
-                    <div class="span4 panel-footer">
+                    <div class="span4 btn-ventas">
                             <input data-wow-delay="1.5s"
                                    id="confirmar"
                                    class="btn btn-info pull-right bounceInRight animated" 
@@ -32,19 +41,17 @@
                                     <div class="row">
                                         <div class="col-xs-4">
                                             <div class="input-group col-lg-12">
-                                                <span class="input-group-addon"><span class="glyphicon glyphicon-search"></span></span>
-                                                <input type="text" ng-model="nombreSearch" class="form-control" placeholder="Buscar por nombre..."/>
+                                                <span class="input-group-addon addon-proveedores">
+                                                    <span class="glyphicon glyphicon-user"></span>
+                                                </span>
+                                                <select class="form-control"
+                                                        ng-model="venta.idCliente"
+                                                        ng-options="cliente.idCliente as cliente.nombre for cliente in clientesList"ng-change="updateMedioPagoSelect(); updateTotal()">
+                                                </select>
+
                                             </div>
                                         </div>
-
-                                        <div class="col-xs-2">
-                                            <div class="input-group col-lg-12">
-                                                <span class="input-group-addon"><span class="glyphicon glyphicon-barcode"></span></span>
-                                                <input type="text" ng-model="codigoSearch" class="form-control" placeholder="Código" />
-                                            </div>
-                                        </div>
-
-                                        <div class="col-xs-3">
+                                        <div class="col-xs-4">
                                             <div class="input-group col-lg-12">
                                                 <span class="input-group-addon addon-proveedores">
                                                     <span class="glyphicon glyphicon-usd"></span>
@@ -52,23 +59,41 @@
                                                 <select class="form-control"
                                                         id="medioPago"
                                                         ng-model="venta.idMedioPago"
-                                                        ng-options="medioPago.idMedioPago as medioPago.descripcion for medioPago in medioPagoList">
+                                                        ng-options="medioPago.idMedioPago as medioPago.descripcion for medioPago in medioPagoList"
+                                                        ng-change="updateTarjetaSelect()">
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-3" id="tarjetasSelect">
+                                            <div class="input-group col-lg-12">
+                                                <span class="input-group-addon addon-proveedores">
+                                                    <span class="glyphicon glyphicon-credit-card"></span>
+                                                </span>
+                                                <select class="form-control"
+                                                        id="tarjeta"
+                                                        ng-model="venta.idTarjeta"
+                                                        ng-options="tarjeta.idTarjeta as tarjeta.descripcion for tarjeta in tarjetasList">
                                                 </select>
                                             </div>
                                         </div>
 
-                                        <div class="col-xs-3">
+                                        
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xs-4">
                                             <div class="input-group col-lg-12">
-                                                <span class="input-group-addon addon-proveedores">
-                                                    <span class="glyphicon glyphicon-user"></span>
-                                                </span>
-                                                <select class="form-control"
-                                                        ng-model="venta.idCliente"
-                                                        ng-options="cliente.idCliente as cliente.nombre for cliente in clientesList">
-                                                </select>
+                                                <span class="input-group-addon"><span class="glyphicon glyphicon-search"></span></span>
+                                                <input type="text" ng-model="nombreSearch" class="form-control" placeholder="Buscar por nombre..."/>
                                             </div>
                                         </div>
-                                    </div>
+
+                                        <div class="col-xs-4">
+                                            <div class="input-group col-lg-12">
+                                                <span class="input-group-addon"><span class="glyphicon glyphicon-barcode"></span></span>
+                                                <input type="text" ng-model="codigoSearch" class="form-control" placeholder="Código" />
+                                            </div>
+                                            </div>
+                                        </div>
                                 </form>
                     </div>
                 </div>
@@ -106,11 +131,25 @@
                                         <td>{{producto.codigoBarras}}</td>
                                         <td ng-style="{'color':(producto.stock<0?'red':'blue')}">{{producto.stock}}</td>
                                         <td>{{producto.nombre}}</td>
-                                        <td ng-hide="venta.idMedioPago==1 || venta.idMedioPago==0">
+                                        <td ng-hide="venta.idMedioPago==1 
+                                                    || venta.idMedioPago==0 
+                                                    || venta.idMedioPago==4
+                                                    || venta.idCliente!=64">
                                             {{producto.precioLista | currency : symbol : fractionSize}}
                                         </td>
-                                        <td ng-hide="venta.idMedioPago==2 || venta.idMedioPago==3">
+                                        <td ng-hide="venta.idMedioPago==2 
+                                                    || venta.idMedioPago==3 
+                                                    || venta.idMedioPago==4
+                                                    || venta.idCliente!=64">
                                             {{producto.precioContado | currency : symbol : fractionSize}}
+                                        </td>
+                                        <td ng-show="venta.idCliente!=64"
+                                            ng-hide="venta.idMedioPago==0
+                                                    || venta.idMedioPago==1
+                                                    || venta.idMedioPago==2
+                                                    || venta.idMedioPago==3
+                                                    || venta.idCliente==64">
+                                            {{producto.precioGremio | currency : symbol : fractionSize}}
                                         </td>
                                         <td>
                                             <div class="col-lg-12">
@@ -154,7 +193,25 @@
                                     <tr ng-repeat="producto in venta.VentaDetalle">
                                         <td>{{producto.descripcion}}</td>
                                         <td>{{producto.cantidad}}</td>
-                                        <td>{{producto.PrecioFinal | currency : symbol : fractionSize}}</td>
+                                        <td ng-hide="venta.idMedioPago==1 
+                                                    || venta.idMedioPago==0 
+                                                    || venta.idMedioPago==4
+                                                    || venta.idCliente!=64">
+                                            {{producto.precioLista | currency : symbol : fractionSize}}
+                                        </td>
+                                        <td ng-hide="venta.idMedioPago==2 
+                                                    || venta.idMedioPago==3 
+                                                    || venta.idMedioPago==4
+                                                    || venta.idCliente!=64">
+                                            {{producto.precioContado | currency : symbol : fractionSize}}
+                                        </td>
+                                        <td ng-show="venta.idCliente!=64"
+                                            ng-hide="venta.idMedioPago==0
+                                                    || venta.idMedioPago==1 && venta.idCliente == 64
+                                                    || venta.idMedioPago==2 && venta.idCliente == 64
+                                                    || venta.idMedioPago==3 && venta.idCliente == 64">
+                                            {{producto.precioGremio | currency : symbol : fractionSize}}
+                                        </td>
                                         <td></td>
                                         <td>
                                            <input class="btn btn-danger pull-right" 

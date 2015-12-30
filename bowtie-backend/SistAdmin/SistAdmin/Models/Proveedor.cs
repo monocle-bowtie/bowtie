@@ -17,8 +17,8 @@ namespace SistAdmin.Models
     {
         public Proveedor()
         {
-            this.Compra = new HashSet<Compra>();
             this.ProductoPrecio = new HashSet<ProductoPrecio>();
+            this.Compra = new HashSet<Compra>();
         }
     
         public int idProveedor { get; set; }
@@ -32,8 +32,8 @@ namespace SistAdmin.Models
         public int UsuarioAlta { get; set; }
         public Nullable<int> UsuarioBaja { get; set; }
         [JsonIgnore]
-        public virtual ICollection<Compra> Compra { get; set; }
-        [JsonIgnore]
         public virtual ICollection<ProductoPrecio> ProductoPrecio { get; set; }
+        [JsonIgnore]
+        public virtual ICollection<Compra> Compra { get; set; }
     }
 }

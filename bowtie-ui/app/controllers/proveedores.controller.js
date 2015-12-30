@@ -24,8 +24,14 @@ define(['app', 'ProveedoresService'], function (app, ProveedoresService) {
             $scope.proveedoresList.push(proveedor);
 
             //Guardo el proveedor
+            //console.log(angular.toJson($scope.proveedor));
             ProveedoresService.saveProveedores(angular.toJson($scope.proveedor));
         }
 
     });
 });
+
+
+
+
+

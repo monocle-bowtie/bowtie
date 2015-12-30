@@ -307,6 +307,21 @@ html .ui-autocomplete { width:1px; } /* without this, the menu expands to 100% i
     color: red;
 }
 
+.ventas-total-custom {
+    margin-bottom: 0;
+    padding: 71px 15px 0 0;
+    color: red;
+    text-align: right;
+}
+
+.ventas-total-custom p {
+    margin-bottom: 0;
+}
+
+.btn-ventas {
+    padding: 90px 0 0 0;
+}
+
 #listado-promociones {
     display: none;
 }

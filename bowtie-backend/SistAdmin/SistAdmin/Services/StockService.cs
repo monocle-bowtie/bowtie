@@ -8,15 +8,33 @@ using System.Data.Entity;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
+using SistAdmin.TransferObjects;
 
 namespace SistAdmin.Services
 {
     public class StockService : BaseService
     {
         // GET api/StockService
-        public List<Stock> getAll()
+        public List<StockDetalle> getAll()
         {
-            return this.db.Stock.ToList();
+            List<StockDetalle> sd = new List<StockDetalle>();
+            List<Stock> s = this.db.Stock.Where(s1=> s1.Estado=="A").ToList();
+
+            foreach(Stock si in s)
+            {
+                StockDetalle sdi = new StockDetalle();
+                sdi.idStock = si.idStock;
+                sdi.idProducto = si.idProducto;
+                sdi.FechaAlta = si.FechaAlta;
+                sdi.FechaBaja = si.FechaBaja==null?DateTime.Parse("1900-04-12T20:44:55"):(DateTime)si.FechaBaja;
+                sdi.UsuarioBaja = si.UsuarioBaja ==null?0:(int)si.UsuarioBaja;
+                sdi.Cantidad = si.Cantidad==null?0:(int)si.Cantidad;
+                sdi.Estado = si.Estado;
+                Producto p = db.Producto.Find(si.idProducto);
+                sdi.ProductoDescripcion = p.Nombre;
+                sd.Add(sdi);
+            }
+            return sd;
         }
 
         // GET api/StockService/5
@@ -28,7 +46,9 @@ namespace SistAdmin.Services
         // POST api/StockService
         public Stock saveOrUpdate(Stock s)
         {
-            if (s.idProducto > 0)
+            s.Estado = "A";
+
+            if (s.idStock > 0)
             {
                 db.Entry(s).State = EntityState.Modified;
             }
@@ -47,7 +67,11 @@ namespace SistAdmin.Services
         public void delete(long id)
         {
             Stock s = this.db.Stock.Find(id);
-            this.db.Stock.Remove(s);
+            s.FechaBaja = DateTime.Today;
+            s.UsuarioBaja = 1;
+            s.Estado = "D";
+            db.Entry(s).State = EntityState.Modified;
+            //this.db.Stock.Remove(s);
             this.save();
         }
     }

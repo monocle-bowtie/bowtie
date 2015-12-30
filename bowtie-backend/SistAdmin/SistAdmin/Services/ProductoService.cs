@@ -1,4 +1,5 @@
 ﻿using SistAdmin.Models;
+using SistAdmin.TransferObjects;
 using log4net;
 using Mastercard.Exceptions;
 using System;
@@ -16,10 +17,17 @@ namespace SistAdmin.Services
 
         private static readonly ILog log = LogManager.GetLogger(typeof(ProductoService));
 
-        // GET api/ProductoService
+        // GET api/Producto
         public List<Producto> getAll()
         {
-            return this.db.Producto.ToList();
+            return this.db.Producto.Where(p1 => p1.Estado == "A").ToList();
+        }
+
+        // GET api/Producto
+        public List<productosWithStock> getProdConStock()
+        {
+            
+             return this.db.productosWithStock.ToList();
         }
 
         // GET api/ProductoService/5
@@ -54,15 +62,22 @@ namespace SistAdmin.Services
         {
             Stock s = this.db.Stock.Where(s1 => s1.idProducto == id).FirstOrDefault();
             CompraDetalle cd = this.db.CompraDetalle.Where(cd1 => cd1.idProducto == id).FirstOrDefault();
-
+            Producto p = this.db.Producto.Find(id);
             if (s == null && cd == null )
             { 
-                Producto p = this.db.Producto.Find(id);
+               
                 p.FechaBaja = DateTime.Today;
                 p.UsuarioBaja = 1;
                 p.Estado = "D";
                 db.Entry(p).State = EntityState.Modified;
                // this.db.Producto.Remove(p);
+                this.save();
+            }
+            else
+            {
+                p.Estado = "A";
+                db.Entry(p).State = EntityState.Modified;
+                // this.db.Producto.Remove(p);
                 this.save();
             }
         }

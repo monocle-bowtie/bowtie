@@ -1,6 +1,6 @@
 define(['app'], function (app) {
-	app.factory('PreciosConfigService',  ['$http', '$q', '$rootScope', '$resource',
-		function( $http, $q, $rootScope, $resource) {
+	app.factory('PreciosConfigService',  ['$http', '$q', '$rootScope', '$resource', 'url',
+		function( $http, $q, $rootScope, $resource, url) {
 
 			var service = {};
 
@@ -13,7 +13,7 @@ define(['app'], function (app) {
 	        	var callback = $q.defer();
         		$http({
 					  method: 'GET',
-					  url: 'http://ec2-52-11-118-155.us-west-2.compute.amazonaws.com/api/grupo/get'
+					  url: url.environment+'api/grupo/get'
 					}).then(function successCallback(response) 
 					{						
 			      		callback.resolve(response.data);
@@ -22,7 +22,7 @@ define(['app'], function (app) {
 	        }
 
 	        function saveGrupo(grupo) {
-	        	return $http.post("http://ec2-52-11-118-155.us-west-2.compute.amazonaws.com/api/grupo/post",
+	        	return $http.post(url.environment+'api/grupo/post',
 			        grupo)
 			        .then(function (response) {
 			            return response;

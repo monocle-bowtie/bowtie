@@ -8,25 +8,29 @@ define(['app', 'VentasService'], function (app, VentasService) {
         $scope.medioPagoList = [];
         $scope.clientesList = [];
         $scope.promocionesList = [];
+        $scope.tarjetasList = [];
         /*************************************************************/
         //Helpers
         $scope.cantidadFilas = 10;
-        $scope.totalVenta = 0;
+        $scope.totalVentaContado = 0;
+        $scope.totalVentaLista = 0;
+        $scope.totalVentaGremio = 0;
+
         $scope.descuentoPromocion = 0;
-        $scope.producto = {};
         /*************************************************************/
         //Cabecera de venta
         $scope.venta = {};
         $scope.venta.idVenta = 0;
-        $scope.venta.idVendedor = 2;
-        $scope.venta.idCliente = 1;
+        $scope.venta.idVendedor = 3;
+        $scope.venta.idCliente = 64;
         $scope.venta.Fecha = Date.today();
         $scope.venta.Total = 0;
         $scope.venta.totalpromocion = 0;
-        $scope.venta.NroTicket = 0;
+        $scope.venta.NroTicket = "111";
         //Se inicializan en 1 para que los select tengan un valor por defecto
         $scope.venta.idMedioPago = 1;
         $scope.venta.idSucursal = 1;
+        $scope.venta.idTarjeta = 0;
         /*************************************************************/
         //Detalle de la venta
         $scope.venta.VentaDetalle = [];
@@ -38,25 +42,22 @@ define(['app', 'VentasService'], function (app, VentasService) {
         var getMedioPago = VentasService.getMedioPago();
         var getClientes = VentasService.getClientes();
         var getPromociones = VentasService.getPromociones();
+        var getTarjetas = VentasService.getTarjetas();
 
         var getProductos = VentasService.getProductos();
 
         $scope.init = function() {
-           getProductos.then(function(productosList) {
-                getStock.then(function(stockList) {
-                    for (var x in productosList) {
-                        for (var i in stockList) {
-                            if (productosList[x].idProducto === stockList[i].idProducto) {
-                                productosList[x].stock = stockList[i].cantidad;
-                            };
-                        }   
-                    }
-                });
+            getProductos.then(function(productosList) {
                 $scope.productosList = productosList;
             });
-             
+
             getMedioPago.then(function(medioPagoList) {
                 $scope.medioPagoList = medioPagoList;
+                for(var i in $scope.medioPagoList) {
+                    if ($scope.medioPagoList[i].idMedioPago === 4) {
+                        medioPagoList.splice(medioPagoList.indexOf(medioPagoList[i]), 1);
+                    }
+                }
             });
 
             getClientes.then(function(clientesList) {
@@ -66,126 +67,194 @@ define(['app', 'VentasService'], function (app, VentasService) {
             getPromociones.then(function(promocionesList) {
                 $scope.promocionesList = promocionesList;
             });
+
+            getTarjetas.then(function(tarjetasList) {
+                $scope.tarjetasList = tarjetasList;
+            });
+
+            $('#tarjetasSelect').hide();
         }
 
-        $scope.saveVenta = function(venta) {
-            $scope.venta.Total = $scope.totalVenta;
-            //checkPromociones($scope.venta);
-            //console.log(angular.toJson($scope.venta));
-            VentasService.saveVenta(angular.toJson($scope.venta));
-
-        }
-
-        function checkPromociones(venta) {
-            var promocionesCandidatas = [];
-            var promocionesEjecutadas = [];
+        $scope.saveVenta = function(producto) {
+            var p = {};
+            p.idVenta = 0;
+            p.idVendedor = 3;
+            p.idCliente = $scope.venta.idCliente;
+            p.Fecha = Date.today();
+            if ($scope.venta.idMedioPago == 1 && $scope.venta.idCliente == 64) {
+                $scope.venta.Total = $scope.totalVentaContado;
+            }else if ($scope.venta.idMedioPago == 2 || $scope.venta.idMedioPago == 3 &&
+                        $scope.idCliente == 64) {
+                $scope.venta.Total = $scope.totalVentaLista;
+            }else if ($scope.venta.idCliente != 64) {
+                $scope.venta.Total = $scope.totalVentaGremio;
+            };
+            p.totalpromocion = 0;
+            p.NroTicket = "1";
+            p.idMedioPago = $scope.venta.idMedioPago;
+            p.idTarjeta = $scope.venta.idTarjeta;
+            p.idSucursal = 1;
 
             for(var i in $scope.venta.VentaDetalle) {
-                for(var x in $scope.promocionesList) {
-                    for(var z in $scope.promocionesList[x].promoProducto){
-                        if($scope.venta.VentaDetalle[i].idProducto ===  $scope.promocionesList[x].promoProducto[z].idProducto) {
-                            promocionesCandidatas.push($scope.promocionesList[x]);
-
-                            //$scope.venta.totalpromocion = $scope.promocionesList[x].precio * $scope.venta.VentaDetalle[i].cantidad;
-                        }
-                    }
+                if ($scope.venta.idMedioPago == 1 && $scope.venta.idCliente == 64) {
+                    $scope.venta.VentaDetalle[i].PrecioUnitario = $scope.venta.VentaDetalle[i].precioFinalContado;
+                    $scope.venta.VentaDetalle[i].PrecioFinal = $scope.venta.VentaDetalle[i].precioFinalContado * $scope.venta.VentaDetalle[i].cantidad;
                 }
-            }
+                if ($scope.venta.idMedioPago == 2 || $scope.venta.idMedioPago == 3 &&
+                        $scope.idCliente == 64) {
+                    $scope.venta.VentaDetalle[i].PrecioUnitario = $scope.venta.VentaDetalle[i].precioFinalLista;
+                    $scope.venta.VentaDetalle[i].PrecioFinal = $scope.venta.VentaDetalle[i].precioFinalLista * $scope.venta.VentaDetalle[i].cantidad;
+                }
+                if ($scope.venta.idCliente != 64) {
+                    $scope.venta.VentaDetalle[i].PrecioUnitario = $scope.venta.VentaDetalle[i].precioFinalGremio;
+                    $scope.venta.VentaDetalle[i].PrecioFinal = $scope.venta.VentaDetalle[i].precioFinalGremio * $scope.venta.VentaDetalle[i].cantidad;
+                }
+                delete $scope.venta.VentaDetalle[i].precioFinalContado;
+                delete $scope.venta.VentaDetalle[i].precioFinalLista;
+                delete $scope.venta.VentaDetalle[i].precioFinalGremio;
 
-            console.log(angular.toJson(promocionesCandidatas));
+                delete $scope.venta.VentaDetalle[i].precioContado;
+                delete $scope.venta.VentaDetalle[i].precioLista;
+                delete $scope.venta.VentaDetalle[i].precioGremio;
+            }
+            
+            VentasService.saveVenta(angular.toJson($scope.venta)); 
+            refreshVenta();
         }
-        
+
         $scope.addProducto = function(producto) {
-            
-            var existe = addToList(producto);
-            if (existe) {
-                for(var i in $scope.venta.VentaDetalle) {
-                    if ($scope.venta.VentaDetalle[i].idProducto === producto.idProducto) {
-                        if (parseInt(producto.cantidad) > 1) {
-                            $scope.venta.VentaDetalle[i].cantidad += parseInt(producto.cantidad);
-                            if ($scope.venta.idMedioPago === 1) {
-                                $scope.venta.VentaDetalle[i].PrecioFinal += producto.precioContado * parseInt(producto.cantidad);
-                            } else if ($scope.venta.idMedioPago === 2 || $scope.venta.idMedioPago === 3) {
-                                $scope.venta.VentaDetalle[i].PrecioFinal += producto.precioLista * parseInt(producto.cantidad);
-                            };
-                            if ($scope.totalVenta > 0) {
-                                $scope.totalVenta += $scope.venta.VentaDetalle[i].PrecioUnitario * parseInt(producto.cantidad);
-                            } else {
-                                $scope.totalVenta = $scope.venta.VentaDetalle[i].PrecioUnitario * parseInt(producto.cantidad);
-                            };
-                        } else {
-                            $scope.venta.VentaDetalle[i].cantidad += 1;
-                            if ($scope.venta.idMedioPago === 1) {
-                                $scope.venta.VentaDetalle[i].PrecioFinal += producto.precioContado;    
-                            } else if ($scope.venta.idMedioPago === 2 || $scope.venta.idMedioPago === 3) {
-                                $scope.venta.VentaDetalle[i].PrecioFinal += producto.precioLista * parseInt(producto.cantidad);
-                            };
-                            $scope.totalVenta += $scope.venta.VentaDetalle[i].PrecioUnitario;
-                        }
-                    };
-                }
-            };
-        }
+            $scope.codigoSearch = "";
+            $scope.nombreSearch = "";
 
+            var checkIfExist = existeEnVentaDetalle(producto);
+            if (!checkIfExist) {
+                var prod = createProducto(producto)
+                $scope.venta.VentaDetalle.push(prod);
 
-        function addToList(producto) {
-            for(var i in $scope.venta.VentaDetalle) {
-                if($scope.venta.VentaDetalle[i].idProducto === producto.idProducto) {
-                    return true;    
-                }
+                $scope.totalVentaContado += prod.precioFinalContado;
+                $scope.totalVentaLista += prod.precioFinalLista;
+                $scope.totalVentaGremio += prod.precioFinalGremio;
             }
-            var ventaDetalle = {};
-            ventaDetalle.descripcion = producto.nombre;
-            ventaDetalle.idVenta = 0;
-            ventaDetalle.idVentaDetalle = 0;
-            ventaDetalle.idProducto = producto.idProducto;
-            if ($scope.venta.idMedioPago === 1) {
-                ventaDetalle.PrecioUnitario = producto.precioContado;    
-            } else if ($scope.venta.idMedioPago ===2 || $scope.venta.idMedioPago ===3) {
-                ventaDetalle.PrecioUnitario = producto.precioLista;
-            };
-
-            if(producto.cantidad === undefined) {
-                producto.cantidad = 1;
-            }
-            ventaDetalle.cantidad = parseInt(producto.cantidad);
-            ventaDetalle.Cantidad = parseInt(producto.cantidad);
-            ventaDetalle.PrecioFinal = ventaDetalle.PrecioUnitario * producto.cantidad;
-            ventaDetalle.Estado = "A";
-            
-            $scope.totalVenta += ventaDetalle.PrecioFinal;
-            $scope.venta.VentaDetalle.push(ventaDetalle);
-            
-            return false;
         }
 
         $scope.removeProducto = function(obj) {
             $scope.venta.VentaDetalle.splice($scope.venta.VentaDetalle.indexOf(obj), 1);
-            $scope.totalVenta -= obj.PrecioFinal;
+            $scope.totalVentaContado -= obj.precioContado;
+            $scope.totalVentaLista -= obj.precioLista;
+            $scope.totalVentaGremio -= obj.precioGremio;
         }
 
-        function refreshVenta() {
+        function createProducto(producto) {
+            var prod = {};
+            prod.descripcion = producto.nombre;
+            prod.idVenta = 0;
+            prod.idVentaDetalle = 0;
+            prod.idProducto = producto.idProducto;
+            //El precio Unitario se carga en saveVenta()
+            prod.precioContado = producto.precioContado;
+            prod.precioLista = producto.precioLista;
+            prod.precioGremio = producto.precioGremio;
+
+            if(producto.cantidad === undefined) {
+                producto.cantidad = 1;
+            }
+            prod.cantidad = producto.cantidad;
+            
+            prod.precioFinalContado = parseInt(producto.precioContado) * parseInt(producto.cantidad);
+            prod.precioFinalLista = parseInt(producto.precioLista) * parseInt(producto.cantidad);
+            prod.precioFinalGremio = parseInt(producto.precioGremio) * parseInt(producto.cantidad);
+
+            return prod;
+        }
+
+        function existeEnVentaDetalle(producto) {
+            var existe = false;
+            for(var i in $scope.venta.VentaDetalle) {
+                if($scope.venta.VentaDetalle[i].idProducto == producto.idProducto) {
+                    $scope.venta.VentaDetalle[i].cantidad += producto.cantidad;
+
+                    $scope.venta.VentaDetalle[i].precioContado += producto.precioContado;
+                    $scope.venta.VentaDetalle[i].precioLista += producto.precioLista;
+                    $scope.venta.VentaDetalle[i].precioGremio += producto.precioGremio;
+
+                    $scope.totalVentaContado += producto.precioContado;
+                    $scope.totalVentaLista += producto.precioLista;
+                    $scope.totalVentaGremio += producto.precioGremio;
+
+                    existe = true;
+                } 
+            }
+            return existe;
+        }
+
+        $scope.updateTotal = function() {
+            if ($scope.venta.idCliente == 64) {
+                $('#totalLista').hide();
+                $('#totalContado').hide();
+                $('#totalGremio').show();
+
+            } else {
+                $('#totalLista').hide();
+                $('#totalContado').show();
+                $('#totalGremio').hide();                
+            }
+        }
+
+        $scope.updateMedioPagoSelect = function() {
+            if ($scope.venta.idCliente != 64) {
+                removePreventa();       
+                var medioPago = {};
+                medioPago.idMedioPago = 4;
+                medioPago.descripcion = "PreVenta";
+                medioPago.RecargoAdicional = 0;
+                $scope.medioPagoList.push(medioPago);
+            } else {
+                removePreventa();
+                $scope.venta.idMedioPago = 1;
+            }
+        }
+
+        $scope.updateTarjetaSelect = function() {
+            if($scope.venta.idMedioPago == 2 || $scope.venta.idMedioPago == 3) {
+                $('#tarjetasSelect').show();
+            } else {
+                $('#tarjetasSelect').hide();
+            }
+         }
+
+         function refreshVenta() {
+            $scope.totalVentaContado = 0;
+            $scope.totalVentaLista = 0;
+            $scope.totalVentaGremio = 0;
+            //Cabecera de venta
             $scope.venta = {};
             $scope.venta.idVenta = 0;
-            $scope.venta.idVendedor = 2;
-            $scope.venta.idCliente = 1;
+            $scope.venta.idVendedor = 3;
+            $scope.venta.idCliente = 64;
             $scope.venta.Fecha = Date.today();
-            $scope.venta.Total = 100;
-            $scope.venta.totalpromocion = 20;
-            $scope.venta.Estado = "A";
+            $scope.venta.Total = 0;
+            $scope.venta.totalpromocion = 0;
+            $scope.venta.NroTicket = "111";
+            //Se inicializan en 1 para que los select tengan un valor por defecto
             $scope.venta.idMedioPago = 1;
             $scope.venta.idSucursal = 1;
-            $scope.venta.NroTicket = "111";
-
+            $scope.venta.idTarjeta = 0;
+            /*************************************************************/
+            //Detalle de la venta
             $scope.venta.VentaDetalle = [];
+            /*************************************************************/
+            //Detalle de las promociones
             $scope.venta.VentaPromoDetalle = [];
-            $scope.totalVenta = 0;
+            
         }
 
-        $( "#medioPago" ).change(function() {
-            refreshVenta();
-        });
-
+        function removePreventa() {
+            for(var i in $scope.medioPagoList) {
+                if ($scope.medioPagoList[i].idMedioPago === 4) {
+                    $scope.medioPagoList.splice($scope.medioPagoList.indexOf($scope.medioPagoList[i]), 1);
+                }
+            }
+        }
 
     });
 });

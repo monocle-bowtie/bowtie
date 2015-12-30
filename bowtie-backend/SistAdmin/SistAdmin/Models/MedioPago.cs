@@ -17,11 +17,12 @@ namespace SistAdmin.Models
     {
         public MedioPago()
         {
+            this.Compra = new HashSet<Compra>();
             this.Venta = new HashSet<Venta>();
         }
     
         public int idMedioPago { get; set; }
-        public string Descripción { get; set; }
+        public string Descripcion { get; set; }
         public Nullable<decimal> RecargoAdicional { get; set; }
         public string Estado { get; set; }
         public System.DateTime FechaAlta { get; set; }
@@ -30,6 +31,8 @@ namespace SistAdmin.Models
         public Nullable<int> UsuarioBaja { get; set; }
         public Nullable<int> Lote { get; set; }
         public string Comprobante { get; set; }
+        [JsonIgnore]
+        public virtual ICollection<Compra> Compra { get; set; }
         [JsonIgnore]
         public virtual ICollection<Venta> Venta { get; set; }
     }

@@ -227,16 +227,31 @@
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="App_Start\Startup.cs" />
     <Compile Include="Controllers\BaseApiController.cs" />
+    <Compile Include="Controllers\CajaController.cs" />
     <Compile Include="Controllers\CiudadController.cs" />
+    <Compile Include="Controllers\ClienteController.cs" />
+    <Compile Include="Controllers\ConceptoController.cs" />
+    <Compile Include="Controllers\GrupoController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ParamController.cs" />
     <Compile Include="Controllers\ProductosController.cs" />
+    <Compile Include="Controllers\PromocionController.cs" />
     <Compile Include="Controllers\ProveedorController.cs" />
     <Compile Include="Controllers\CompraController.cs" />
+    <Compile Include="Controllers\StockController.cs" />
+    <Compile Include="Controllers\MedioPagoController.cs" />
+    <Compile Include="Controllers\SucursalController.cs" />
+    <Compile Include="Controllers\TarjetaController.cs" />
+    <Compile Include="Controllers\VendedorController.cs" />
+    <Compile Include="Controllers\VentaController.cs" />
     <Compile Include="Exceptions\ServiceException.cs" />
     <Compile Include="Exceptions\UserNotFoundException.cs" />
     <Compile Include="Exceptions\WrongUserPasswordException.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Caja.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Ciudad.cs">
       <DependentUpon>Model1.tt</DependentUpon>
@@ -248,6 +263,9 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\CompraDetalle.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Concepto.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Funcion.cs">
@@ -286,10 +304,16 @@
     <Compile Include="Models\Pais.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Parametrizacion.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Producto.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ProductoPrecio.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\productosWithStock.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Promocion.cs">
@@ -316,6 +340,9 @@
     <Compile Include="Models\Sucursal.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Tarjeta.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Usuario.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -328,20 +355,42 @@
     <Compile Include="Models\VentaDetalle.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\VentaPromoDetalle.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Results\ChallengeResult.cs" />
     <Compile Include="Services\BaseService.cs" />
+    <Compile Include="Services\CajaService.cs" />
     <Compile Include="Services\CiudadService.cs" />
+    <Compile Include="Services\ClienteService.cs" />
     <Compile Include="Services\CompraService.cs" />
+    <Compile Include="Services\ConceptoService.cs" />
+    <Compile Include="Services\GrupoService.cs" />
+    <Compile Include="Services\MedioPagoService.cs" />
+    <Compile Include="Services\ParamService.cs" />
     <Compile Include="Services\ProductoService.cs" />
+    <Compile Include="Services\PromocionService.cs" />
     <Compile Include="Services\ProveedorService.cs" />
     <Compile Include="Services\StockService.cs" />
+    <Compile Include="Services\SucursalService.cs" />
+    <Compile Include="Services\TarjetaService.cs" />
+    <Compile Include="Services\VendedorService.cs" />
     <Compile Include="Services\VentaDetalleService.cs" />
     <Compile Include="Services\VentaService.cs" />
+    <Compile Include="TransferObjects\ConfirmarPreventa.cs" />
+    <Compile Include="TransferObjects\GrupoXProducto1.cs" />
+    <Compile Include="TransferObjects\Preventa.cs" />
+    <Compile Include="TransferObjects\PreventasAPagar.cs" />
+    <Compile Include="TransferObjects\ProdDetalle.cs" />
+    <Compile Include="TransferObjects\PromoDetalle.cs" />
+    <Compile Include="TransferObjects\PromoProductoDetallev1.cs" />
+    <Compile Include="TransferObjects\StockDetalle.cs" />
     <Compile Include="TransferObjects\CompraDetalle1.cs" />
     <Compile Include="TransferObjects\RegistrarComprar.cs" />
     <Compile Include="TransferObjects\RegistrarVenta.cs" />
     <Compile Include="TransferObjects\SimplifiedExceptionTO.cs" />
+    <Compile Include="TransferObjects\VentaDetalle1.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\HelpPage\HelpPage.css" />
@@ -464,6 +513,7 @@
     <Folder Include="App_Data\" />
     <Folder Include="Class\" />
     <Folder Include="Content\themes\base\images\" />
+    <Folder Include="Views\Venta\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

@@ -10,10 +10,12 @@ define(['angularAMD',
 		'metisMenu',
 		'datepicker',
 		'date'], 
-		function (angularAMD, anguarRoute, angularCookies, angularResource, angularMocks, $, jqueryFittext, jqueryUi, bootstrap) {
-		    
+		function (angularAMD, anguarRoute, angularCookies, angularResource, angularMocks, $, jqueryFittext, jqueryUi, bootstrap) {  
 		    var app = angular.module("webapp", ['ngRoute','angular-cookies', 'ngResource']);
-
+		    app.constant("url", {
+		    	'environment': 'http://localhost:53740/'
+		    	//'environment': 'http://ec2-52-11-118-155.us-west-2.compute.amazonaws.com/'
+		    });
 		    app.config(function ($routeProvider, $provide) {
 
 		    	//Configuracion para que levanten los servicios
@@ -72,6 +74,16 @@ define(['angularAMD',
 		        $routeProvider.when("/promociones-config", angularAMD.route({
 		            templateUrl: 'app/views/promociones-view.html', controller: 'PromocionesCtrl',
 		            controllerUrl: '../app/controllers/promociones.controller'
+		        }));
+
+		        $routeProvider.when("/medioPago", angularAMD.route({
+		            templateUrl: 'app/views/medioPago-view.html', controller: 'MedioPagoCtrl',
+		            controllerUrl: '../app/controllers/medioPago.controller'
+		        }));
+
+		        $routeProvider.when("/config/setUp", angularAMD.route({
+		            templateUrl: 'app/views/config-view.html', controller: 'ConfigCtrl',
+		            controllerUrl: '../app/controllers/config.controller'
 		        }));
 
 		    });

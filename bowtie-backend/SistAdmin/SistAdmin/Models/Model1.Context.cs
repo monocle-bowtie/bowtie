@@ -27,13 +27,11 @@ namespace SistAdmin.Models
     
         public virtual DbSet<Ciudad> Ciudad { get; set; }
         public virtual DbSet<Cliente> Cliente { get; set; }
-        public virtual DbSet<Compra> Compra { get; set; }
         public virtual DbSet<CompraDetalle> CompraDetalle { get; set; }
         public virtual DbSet<Funcion> Funcion { get; set; }
         public virtual DbSet<FuncionXRol> FuncionXRol { get; set; }
         public virtual DbSet<GrupoProducto> GrupoProducto { get; set; }
         public virtual DbSet<GrupoXProducto> GrupoXProducto { get; set; }
-        public virtual DbSet<MedioPago> MedioPago { get; set; }
         public virtual DbSet<Novedad> Novedad { get; set; }
         public virtual DbSet<Pais> Pais { get; set; }
         public virtual DbSet<Producto> Producto { get; set; }
@@ -45,10 +43,18 @@ namespace SistAdmin.Models
         public virtual DbSet<Sucursal> Sucursal { get; set; }
         public virtual DbSet<Usuario> Usuario { get; set; }
         public virtual DbSet<Vendedor> Vendedor { get; set; }
-        public virtual DbSet<Venta> Venta { get; set; }
         public virtual DbSet<VentaDetalle> VentaDetalle { get; set; }
-        public virtual DbSet<Promocion> Promocion { get; set; }
         public virtual DbSet<PromocionProducto> PromocionProducto { get; set; }
         public virtual DbSet<ProductoPrecio> ProductoPrecio { get; set; }
+        public virtual DbSet<Compra> Compra { get; set; }
+        public virtual DbSet<MedioPago> MedioPago { get; set; }
+        public virtual DbSet<Concepto> Concepto { get; set; }
+        public virtual DbSet<VentaPromoDetalle> VentaPromoDetalle { get; set; }
+        public virtual DbSet<Caja> Caja { get; set; }
+        public virtual DbSet<Parametrizacion> Parametrizacion { get; set; }
+        public virtual DbSet<Promocion> Promocion { get; set; }
+        public virtual DbSet<Tarjeta> Tarjeta { get; set; }
+        public virtual DbSet<Venta> Venta { get; set; }
+        public virtual DbSet<productosWithStock> productosWithStock { get; set; }
     }
 }

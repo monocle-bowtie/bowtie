@@ -1,6 +1,6 @@
 define(['app'], function (app) {
-	app.factory('ProveedoresService',  ['$http', '$q', '$rootScope', '$resource',
-		function( $http, $q, $rootScope, $resource) {
+	app.factory('ProveedoresService',  ['$http', '$q', '$rootScope', '$resource', 'url',
+		function( $http, $q, $rootScope, $resource, url) {
 
 			var service = {};
 
@@ -13,7 +13,7 @@ define(['app'], function (app) {
 	        	var callback = $q.defer();
         		$http({
 					  method: 'GET',
-					  url: 'http://ec2-52-11-118-155.us-west-2.compute.amazonaws.com/api/proveedor/get'
+					  url: url.environment+'api/proveedor/get'
 					}).then(function successCallback(response) 
 					{						
 			      		callback.resolve(response.data);
@@ -22,7 +22,7 @@ define(['app'], function (app) {
 	        }
 
 	        function saveProveedores(proveedor) {
-	        	return $http.post("http://ec2-52-11-118-155.us-west-2.compute.amazonaws.com/api/proveedor/post",
+	        	return $http.post(url.environment+'api/proveedor/post',
 			        proveedor)
 			        .then(function (response) {
 			            return response;

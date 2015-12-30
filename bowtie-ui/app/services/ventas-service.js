@@ -1,6 +1,6 @@
 define(['app'], function (app) {
-	app.factory('VentasService',  ['$resource', '$q', '$http', '$rootScope',
-		function( $resource, $q, $http, $rootScope) {
+	app.factory('VentasService',  ['$resource', '$q', '$http', '$rootScope', 'url',
+		function( $resource, $q, $http, $rootScope, url) {
 			var service = {};
 
         	service.getProductos = getProductos;
@@ -8,17 +8,30 @@ define(['app'], function (app) {
         	service.getStock = getStock;
         	service.getClientes = getClientes;
         	service.getPromociones = getPromociones;
+        	service.getTarjetas = getTarjetas;
 
         	service.guardarMovimientosCaja = guardarMovimientosCaja;
         	service.saveVenta = saveVenta;
 
         	return service;
 
+        	function getTarjetas() {
+	        	var callback = $q.defer();
+        		$http({
+					  method: 'GET',
+					  url: url.environment+'api/tarjeta/get'
+					}).then(function successCallback(response) 
+					{						
+			      		callback.resolve(response.data);
+					});
+				return callback.promise;
+	        }
+
         	function getClientes() {
 	        	var callback = $q.defer();
         		$http({
 					  method: 'GET',
-					  url: 'http://ec2-52-11-118-155.us-west-2.compute.amazonaws.com/api/cliente/get'
+					  url: url.environment+'api/cliente/get'
 					}).then(function successCallback(response) 
 					{						
 			      		callback.resolve(response.data);
@@ -30,7 +43,7 @@ define(['app'], function (app) {
 	        	var callback = $q.defer();
         		$http({
 					  method: 'GET',
-					  url: 'http://ec2-52-11-118-155.us-west-2.compute.amazonaws.com/api/productos/get'
+					  url: url.environment+'api/productos/GetwithStock'
 					}).then(function successCallback(response) {
 			      		callback.resolve(response.data);
 					});
@@ -41,7 +54,7 @@ define(['app'], function (app) {
 	        	var callback = $q.defer();
         		$http({
 					  method: 'GET',
-					  url: 'http://ec2-52-11-118-155.us-west-2.compute.amazonaws.com/api/MedioPago/get'
+					  url: url.environment+'api/MedioPago/get'
 					}).then(function successCallback(response) 
 					{						
 			      		callback.resolve(response.data);
@@ -53,7 +66,7 @@ define(['app'], function (app) {
 	        	var callback = $q.defer();
         		$http({
 					  method: 'GET',
-					  url: 'http://ec2-52-11-118-155.us-west-2.compute.amazonaws.com/api/stock/get'
+					  url: url.environment+'api/stock/get'
 					}).then(function successCallback(response) 
 					{						
 			      		callback.resolve(response.data);
@@ -65,7 +78,7 @@ define(['app'], function (app) {
 	        	var callback = $q.defer();
         		$http({
 					  method: 'GET',
-					  url: 'http://ec2-52-11-118-155.us-west-2.compute.amazonaws.com/api/promocion/getpromodetalle'
+					  url: url.environment+'api/promocion/getpromodetalle'
 					}).then(function successCallback(response) 
 					{						
 			      		callback.resolve(response.data);
@@ -74,7 +87,7 @@ define(['app'], function (app) {
 	        }
 
 	        function saveVenta(venta) {
-	        	return $http.post("http://ec2-52-11-118-155.us-west-2.compute.amazonaws.com/api/Venta/post",
+	        	return $http.post(url.environment+'api/Venta/post',
 			        venta)
 			        .then(function (response) {
 			        	alert('La venta se guardó exitosamente');
@@ -84,7 +97,7 @@ define(['app'], function (app) {
 	        }
 	        
 	        function guardarMovimientosCaja(movimiento, callbackOk, callbackFail) {
-            	return $resource('http://localhost:8080/api/movimiento.json', {}, {
+            	return $resource(url.environment+'api/movimiento.json', {}, {
 	            	saveMovimiento: {
 		                    method: 'POST'
 		                }

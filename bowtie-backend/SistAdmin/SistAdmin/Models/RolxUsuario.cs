@@ -12,7 +12,6 @@ namespace SistAdmin.Models
     using System;
     using System.Collections.Generic;
     using Newtonsoft.Json;
-    
     public partial class RolxUsuario
     {
         public int idRol { get; set; }

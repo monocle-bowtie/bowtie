@@ -8,12 +8,16 @@ define(['app'], function (app) {
 			NombreProducto 		: "",
 	        costo  		        : "",
 	        cantidad 	        : "",
+	        Codigo				:"",
+
 	        
 	        clearProducto		: function() 
 	        {
 	        	this.NombreProducto = "";
 		        this.costo  = "";
 		        this.cantidad = "";
+		        this.Codigo = "";
+
 	        }
 		};
 

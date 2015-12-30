@@ -8,6 +8,7 @@ define(['app', 'ComprasService', 'AutocompleteDirective', 'ProductoModel'], func
 
         $scope.producto = new ProductoModel();
         $scope.productos = { autocomplete: [] };
+        $scope.totalCompra = 0;
 
         $scope.compra = {};
         $scope.compra.idCompra = 0;
@@ -19,6 +20,7 @@ define(['app', 'ComprasService', 'AutocompleteDirective', 'ProductoModel'], func
         $scope.compra.idMedioPago = 0;
         $scope.compra.NroFactura = "";
         $scope.compra.CompraDetalle = [];
+
 
         var getProveedores = ComprasService.getProveedores();
         var getProductos = ComprasService.getProductos();
@@ -38,6 +40,11 @@ define(['app', 'ComprasService', 'AutocompleteDirective', 'ProductoModel'], func
             }), 1000);
 
             $timeout(getMedioPago.then(function(medioPagoList) {
+                for(var i in medioPagoList){
+                    if (medioPagoList[i].idMedioPago === 4) {
+                        medioPagoList.splice(medioPagoList.indexOf(medioPagoList[i]), 1);
+                    }
+                }  
                 $scope.medioPagoList = medioPagoList;
             }), 1000);
 
@@ -50,16 +57,68 @@ define(['app', 'ComprasService', 'AutocompleteDirective', 'ProductoModel'], func
             for(var i in  $scope.compra.CompraDetalle) {
                  $scope.compra.Total += $scope.compra.CompraDetalle[i].PrecioTotal;
             }
-            ComprasService.saveCompra(angular.toJson($scope.compra));
-            //console.log(angular.toJson($scope.compra));
+
+            if ($scope.compra.CompraDetalle.length > 0 &&
+                    checkCabeceraFields($scope.compra)) {
+                console.log(angular.toJson($scope.compra));
+                ComprasService.saveCompra(angular.toJson($scope.compra));    
+            } else {
+                alert('Debe ingresar al menos un producto y completar todos los campos de la cabecera');
+            };
         }
 
         $scope.addProducto = function(prod) {
-            var existe = createProductoExistente(prod);
-            if (!existe) {
-                createProductoNuevo(prod);
+            if (prod.NombreProducto != "" &&
+                    prod.cantidad != "" &&
+                        prod.costo != "" &&
+                            prod.Codigo != "") {
+                
+                $scope.compra.CompraDetalle.push(createProducto(prod));
+                $scope.totalCompra += parseInt(prod.costo) * parseInt(prod.cantidad);
+                $scope.producto.clearProducto();    
+            } else {
+                alert('Debe completar todos los campos en Detalle de Producto');
             };
-            $scope.producto.clearProducto();
+            
+        }
+
+        function checkCabeceraFields(compra) {
+            if(compra.idProveedor != 0 &&
+                compra.idGrupo != 0 &&
+                    compra.Fecha != "" &&
+                        compra.idMedioPago != 0 &&
+                            compra.NroFactura != "") {
+                return true;
+
+            } else {return false}
+        }
+
+        function existeProductList(producto, lista) {
+            for(var i in lista) {
+                if(lista[i].idProducto === producto.idProducto) {
+                    return true;    
+                }
+            }
+            return false
+        }
+
+        function createProducto(prod) {
+            for (var i = 0; i < $scope.productosList.length; i++) {
+                if($scope.productosList[i].nombre === prod.NombreProducto) {
+                    var compraDetalle = {};
+                    compraDetalle.idCompra = 0;
+                    compraDetalle.idCompraDetalle = 0;
+                    compraDetalle.idProducto = $scope.productosList[i].idProducto;
+                    compraDetalle.NombreProducto = prod.NombreProducto;
+                    compraDetalle.Cantidad = parseInt(prod.cantidad);
+                    compraDetalle.PrecioUnitario = parseInt(prod.costo);
+                    compraDetalle.PrecioTotal = parseInt(prod.costo) * parseInt(prod.cantidad);
+                    compraDetalle.CodigoBarras = prod.Codigo;
+                    
+                    return compraDetalle;
+                } 
+            };
+            return createProductoNuevo(prod);
         }
 
         function createProductoNuevo(prod) {
@@ -70,33 +129,15 @@ define(['app', 'ComprasService', 'AutocompleteDirective', 'ProductoModel'], func
             compraDetalle.NombreProducto = prod.NombreProducto;
             compraDetalle.Cantidad = parseInt(prod.cantidad);
             compraDetalle.PrecioUnitario = parseInt(prod.costo);
-            compraDetalle.PrecioTotal = prod.costo * prod.cantidad;
+            compraDetalle.PrecioTotal = parseInt(prod.costo) * parseInt(prod.cantidad);
             compraDetalle.CodigoBarras = prod.Codigo;
-            $scope.compra.CompraDetalle.push(compraDetalle);
-        }
 
-        function createProductoExistente(prod) {
-            for (var i = 0; i < $scope.productosList.length; i++) {
-                if($scope.productosList[i].nombre === prod.NombreProducto) {
-                    var compraDetalle = {};
-                    compraDetalle.idCompra = 0;
-                    compraDetalle.idCompraDetalle = 0;
-                    compraDetalle.idProducto = $scope.productosList[i].idProducto;
-                    compraDetalle.NombreProducto = prod.NombreProducto;
-                    compraDetalle.Cantidad = parseInt(prod.cantidad);
-                    compraDetalle.PrecioUnitario = parseInt(prod.costo);
-                    compraDetalle.PrecioTotal = prod.costo * prod.cantidad;
-                    $scope.compra.CompraDetalle.push(compraDetalle);
-                    return true;
-                } 
-            };
-            return false;
+            return compraDetalle;
         }
 
         $scope.remove = function(obj) {
-            if(obj != -1) {
-                $scope.compra.CompraDetalle.splice(obj, 1);
-            }
+            $scope.compra.CompraDetalle.splice($scope.compra.CompraDetalle.indexOf(obj), 1);
+            $scope.totalCompra -= obj.PrecioUnitario;
         }
        
         $('#ver-detalle-compras').click(function() {

@@ -64,6 +64,7 @@ namespace SistAdmin.Controllers
                 ProveedorService service = (ProveedorService)new ProveedorService().setDatabase(db);
                 p.FechaAlta = DateTime.Today;
                 p.UsuarioAlta = 1;
+                p.Estado = "A";
                 p = service.saveOrUpdate(p);
 
                 response = this.getSuccessResponse(p);

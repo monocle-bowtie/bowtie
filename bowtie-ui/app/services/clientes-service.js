@@ -1,6 +1,6 @@
 define(['app'], function (app) {
-	app.factory('ClientesService',  ['$http', '$q', '$rootScope', '$resource',
-		function( $http, $q, $rootScope, $resource) {
+	app.factory('ClientesService',  ['$http', '$q', '$rootScope', '$resource', 'url', 
+		function( $http, $q, $rootScope, $resource, url) {
 
 			var service = {};
 
@@ -13,7 +13,7 @@ define(['app'], function (app) {
 	        	var callback = $q.defer();
         		$http({
 					  method: 'GET',
-					  url: 'http://ec2-52-11-118-155.us-west-2.compute.amazonaws.com/api/cliente/get'
+					  url: url.environment+'api/cliente/get'
 					}).then(function successCallback(response) 
 					{						
 			      		callback.resolve(response.data);
@@ -22,9 +22,10 @@ define(['app'], function (app) {
 	        }
 
 	         function saveCliente(cliente) {
-	        	return $http.post("http://ec2-52-11-118-155.us-west-2.compute.amazonaws.com/api/cliente/post",
+	        	return $http.post(url.environment+'api/cliente/post',
 			        cliente)
 			        .then(function (response) {
+			        	alert('El Cliente se creó exitosamente');
 			            return response;
 			        });
 	        }

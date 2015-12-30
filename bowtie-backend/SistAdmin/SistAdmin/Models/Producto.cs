@@ -35,7 +35,7 @@ namespace SistAdmin.Models
         public Nullable<int> UsuarioBaja { get; set; }
         public Nullable<decimal> PrecioLista { get; set; }
         public Nullable<decimal> PrecioContado { get; set; }
-    
+        public Nullable<decimal> PrecioGremio { get; set; }
         [JsonIgnore]
         public virtual ICollection<CompraDetalle> CompraDetalle { get; set; }
         [JsonIgnore]

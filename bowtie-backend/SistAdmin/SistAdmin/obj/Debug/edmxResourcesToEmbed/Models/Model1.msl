@@ -33,21 +33,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="Compra">
-      <EntityTypeMapping TypeName="bowtieModel.Compra">
-        <MappingFragment StoreEntitySet="Compra">
-          <ScalarProperty Name="idCompra" ColumnName="idCompra" />
-          <ScalarProperty Name="idProveedor" ColumnName="idProveedor" />
-          <ScalarProperty Name="Fecha" ColumnName="Fecha" />
-          <ScalarProperty Name="Total" ColumnName="Total" />
-          <ScalarProperty Name="Estado" ColumnName="Estado" />
-          <ScalarProperty Name="FechaAlta" ColumnName="FechaAlta" />
-          <ScalarProperty Name="UsuarioAlta" ColumnName="UsuarioAlta" />
-          <ScalarProperty Name="FechaBaja" ColumnName="FechaBaja" />
-          <ScalarProperty Name="UsuarioBaja" ColumnName="UsuarioBaja" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="CompraDetalle">
       <EntityTypeMapping TypeName="bowtieModel.CompraDetalle">
         <MappingFragment StoreEntitySet="CompraDetalle">
@@ -118,22 +103,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="MedioPago">
-      <EntityTypeMapping TypeName="bowtieModel.MedioPago">
-        <MappingFragment StoreEntitySet="MedioPago">
-          <ScalarProperty Name="idMedioPago" ColumnName="idMedioPago" />
-          <ScalarProperty Name="Descripción" ColumnName="Descripción" />
-          <ScalarProperty Name="RecargoAdicional" ColumnName="RecargoAdicional" />
-          <ScalarProperty Name="Estado" ColumnName="Estado" />
-          <ScalarProperty Name="FechaAlta" ColumnName="FechaAlta" />
-          <ScalarProperty Name="UsuarioAlta" ColumnName="UsuarioAlta" />
-          <ScalarProperty Name="FechaBaja" ColumnName="FechaBaja" />
-          <ScalarProperty Name="UsuarioBaja" ColumnName="UsuarioBaja" />
-          <ScalarProperty Name="Lote" ColumnName="Lote" />
-          <ScalarProperty Name="Comprobante" ColumnName="Comprobante" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="Novedad">
       <EntityTypeMapping TypeName="bowtieModel.Novedad">
         <MappingFragment StoreEntitySet="Novedad">
@@ -164,6 +133,7 @@
     <EntitySetMapping Name="Producto">
       <EntityTypeMapping TypeName="bowtieModel.Producto">
         <MappingFragment StoreEntitySet="Producto">
+          <ScalarProperty Name="PrecioGremio" ColumnName="PrecioGremio" />
           <ScalarProperty Name="PrecioContado" ColumnName="PrecioContado" />
           <ScalarProperty Name="PrecioLista" ColumnName="PrecioLista" />
           <ScalarProperty Name="idProducto" ColumnName="idProducto" />
@@ -300,24 +270,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="Venta">
-      <EntityTypeMapping TypeName="bowtieModel.Venta">
-        <MappingFragment StoreEntitySet="Venta">
-          <ScalarProperty Name="idVenta" ColumnName="idVenta" />
-          <ScalarProperty Name="idVendedor" ColumnName="idVendedor" />
-          <ScalarProperty Name="idCliente" ColumnName="idCliente" />
-          <ScalarProperty Name="Fecha" ColumnName="Fecha" />
-          <ScalarProperty Name="Total" ColumnName="Total" />
-          <ScalarProperty Name="Estado" ColumnName="Estado" />
-          <ScalarProperty Name="FechaAlta" ColumnName="FechaAlta" />
-          <ScalarProperty Name="UsuarioAlta" ColumnName="UsuarioAlta" />
-          <ScalarProperty Name="FechaBaja" ColumnName="FechaBaja" />
-          <ScalarProperty Name="UsuarioBaja" ColumnName="UsuarioBaja" />
-          <ScalarProperty Name="idMedioPago" ColumnName="idMedioPago" />
-          <ScalarProperty Name="idSucursal" ColumnName="idSucursal" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="VentaDetalle">
       <EntityTypeMapping TypeName="bowtieModel.VentaDetalle">
         <MappingFragment StoreEntitySet="VentaDetalle">
@@ -332,20 +284,6 @@
           <ScalarProperty Name="UsuarioAlta" ColumnName="UsuarioAlta" />
           <ScalarProperty Name="FechaBaja" ColumnName="FechaBaja" />
           <ScalarProperty Name="UsuarioBaja" ColumnName="UsuarioBaja" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="Promocion">
-      <EntityTypeMapping TypeName="bowtieModel.Promocion">
-        <MappingFragment StoreEntitySet="Promocion">
-          <ScalarProperty Name="UsuarioBaja" ColumnName="UsuarioBaja" />
-          <ScalarProperty Name="FechaBaja" ColumnName="FechaBaja" />
-          <ScalarProperty Name="UsuarioAlta" ColumnName="UsuarioAlta" />
-          <ScalarProperty Name="FechaAlta" ColumnName="FechaAlta" />
-          <ScalarProperty Name="Estado" ColumnName="Estado" />
-          <ScalarProperty Name="Precio" ColumnName="Precio" />
-          <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
-          <ScalarProperty Name="IdPromocion" ColumnName="IdPromocion" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -372,6 +310,162 @@
           <ScalarProperty Name="Estado" ColumnName="Estado" />
           <ScalarProperty Name="PrecioCosto" ColumnName="PrecioCosto" />
           <ScalarProperty Name="idProveedor" ColumnName="idProveedor" />
+          <ScalarProperty Name="idProducto" ColumnName="idProducto" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Compra">
+      <EntityTypeMapping TypeName="bowtieModel.Compra">
+        <MappingFragment StoreEntitySet="Compra">
+          <ScalarProperty Name="idMedioPago" ColumnName="idMedioPago" />
+          <ScalarProperty Name="NroFactura" ColumnName="NroFactura" />
+          <ScalarProperty Name="UsuarioBaja" ColumnName="UsuarioBaja" />
+          <ScalarProperty Name="FechaBaja" ColumnName="FechaBaja" />
+          <ScalarProperty Name="UsuarioAlta" ColumnName="UsuarioAlta" />
+          <ScalarProperty Name="FechaAlta" ColumnName="FechaAlta" />
+          <ScalarProperty Name="Estado" ColumnName="Estado" />
+          <ScalarProperty Name="Total" ColumnName="Total" />
+          <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+          <ScalarProperty Name="idProveedor" ColumnName="idProveedor" />
+          <ScalarProperty Name="idCompra" ColumnName="idCompra" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="MedioPago">
+      <EntityTypeMapping TypeName="bowtieModel.MedioPago">
+        <MappingFragment StoreEntitySet="MedioPago">
+          <ScalarProperty Name="Comprobante" ColumnName="Comprobante" />
+          <ScalarProperty Name="Lote" ColumnName="Lote" />
+          <ScalarProperty Name="UsuarioBaja" ColumnName="UsuarioBaja" />
+          <ScalarProperty Name="FechaBaja" ColumnName="FechaBaja" />
+          <ScalarProperty Name="UsuarioAlta" ColumnName="UsuarioAlta" />
+          <ScalarProperty Name="FechaAlta" ColumnName="FechaAlta" />
+          <ScalarProperty Name="Estado" ColumnName="Estado" />
+          <ScalarProperty Name="RecargoAdicional" ColumnName="RecargoAdicional" />
+          <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+          <ScalarProperty Name="idMedioPago" ColumnName="idMedioPago" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Concepto">
+      <EntityTypeMapping TypeName="bowtieModel.Concepto">
+        <MappingFragment StoreEntitySet="Concepto">
+          <ScalarProperty Name="UsuarioBaja" ColumnName="UsuarioBaja" />
+          <ScalarProperty Name="FechaBaja" ColumnName="FechaBaja" />
+          <ScalarProperty Name="UsuarioAlta" ColumnName="UsuarioAlta" />
+          <ScalarProperty Name="FechaAlta" ColumnName="FechaAlta" />
+          <ScalarProperty Name="Estado" ColumnName="Estado" />
+          <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+          <ScalarProperty Name="IdConcepto" ColumnName="IdConcepto" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="VentaPromoDetalle">
+      <EntityTypeMapping TypeName="bowtieModel.VentaPromoDetalle">
+        <MappingFragment StoreEntitySet="VentaPromoDetalle">
+          <ScalarProperty Name="UsuarioBaja" ColumnName="UsuarioBaja" />
+          <ScalarProperty Name="FechaBaja" ColumnName="FechaBaja" />
+          <ScalarProperty Name="UsuarioAlta" ColumnName="UsuarioAlta" />
+          <ScalarProperty Name="FechaAlta" ColumnName="FechaAlta" />
+          <ScalarProperty Name="Estado" ColumnName="Estado" />
+          <ScalarProperty Name="PrecioTotal" ColumnName="PrecioTotal" />
+          <ScalarProperty Name="PrecioUnitario" ColumnName="PrecioUnitario" />
+          <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
+          <ScalarProperty Name="idPromocion" ColumnName="idPromocion" />
+          <ScalarProperty Name="idPromoDetalle" ColumnName="idPromoDetalle" />
+          <ScalarProperty Name="IdVenta" ColumnName="IdVenta" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Caja">
+      <EntityTypeMapping TypeName="bowtieModel.Caja">
+        <MappingFragment StoreEntitySet="Caja">
+          <ScalarProperty Name="Monto" ColumnName="Monto" />
+          <ScalarProperty Name="FechaBaja" ColumnName="FechaBaja" />
+          <ScalarProperty Name="UsuarioBaja" ColumnName="UsuarioBaja" />
+          <ScalarProperty Name="UsuarioAlta" ColumnName="UsuarioAlta" />
+          <ScalarProperty Name="FechaAlta" ColumnName="FechaAlta" />
+          <ScalarProperty Name="Estado" ColumnName="Estado" />
+          <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+          <ScalarProperty Name="TipoMovimiento" ColumnName="TipoMovimiento" />
+          <ScalarProperty Name="idConcepto" ColumnName="idConcepto" />
+          <ScalarProperty Name="idCaja" ColumnName="idCaja" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Parametrizacion">
+      <EntityTypeMapping TypeName="bowtieModel.Parametrizacion">
+        <MappingFragment StoreEntitySet="Parametrizacion">
+          <ScalarProperty Name="UsuarioBaja" ColumnName="UsuarioBaja" />
+          <ScalarProperty Name="FechaBaja" ColumnName="FechaBaja" />
+          <ScalarProperty Name="UsuarioAlta" ColumnName="UsuarioAlta" />
+          <ScalarProperty Name="FechaAlta" ColumnName="FechaAlta" />
+          <ScalarProperty Name="Estado" ColumnName="Estado" />
+          <ScalarProperty Name="Valor" ColumnName="Valor" />
+          <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+          <ScalarProperty Name="idParametrizacion" ColumnName="idParametrizacion" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Promocion">
+      <EntityTypeMapping TypeName="bowtieModel.Promocion">
+        <MappingFragment StoreEntitySet="Promocion">
+          <ScalarProperty Name="UsuarioBaja" ColumnName="UsuarioBaja" />
+          <ScalarProperty Name="FechaBaja" ColumnName="FechaBaja" />
+          <ScalarProperty Name="UsuarioAlta" ColumnName="UsuarioAlta" />
+          <ScalarProperty Name="FechaAlta" ColumnName="FechaAlta" />
+          <ScalarProperty Name="Estado" ColumnName="Estado" />
+          <ScalarProperty Name="Precio" ColumnName="Precio" />
+          <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+          <ScalarProperty Name="IdPromocion" ColumnName="IdPromocion" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Tarjeta">
+      <EntityTypeMapping TypeName="bowtieModel.Tarjeta">
+        <MappingFragment StoreEntitySet="Tarjeta">
+          <ScalarProperty Name="UsuarioBaja" ColumnName="UsuarioBaja" />
+          <ScalarProperty Name="FechaBaja" ColumnName="FechaBaja" />
+          <ScalarProperty Name="UsuarioAlta" ColumnName="UsuarioAlta" />
+          <ScalarProperty Name="FechaAlta" ColumnName="FechaAlta" />
+          <ScalarProperty Name="Estado" ColumnName="Estado" />
+          <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+          <ScalarProperty Name="idTarjeta" ColumnName="idTarjeta" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Venta">
+      <EntityTypeMapping TypeName="bowtieModel.Venta">
+        <MappingFragment StoreEntitySet="Venta">
+          <ScalarProperty Name="MontoPagado" ColumnName="MontoPagado" />
+          <ScalarProperty Name="idTarjeta" ColumnName="idTarjeta" />
+          <ScalarProperty Name="TotalPromocion" ColumnName="TotalPromocion" />
+          <ScalarProperty Name="NroTicket" ColumnName="NroTicket" />
+          <ScalarProperty Name="idSucursal" ColumnName="idSucursal" />
+          <ScalarProperty Name="idMedioPago" ColumnName="idMedioPago" />
+          <ScalarProperty Name="UsuarioBaja" ColumnName="UsuarioBaja" />
+          <ScalarProperty Name="FechaBaja" ColumnName="FechaBaja" />
+          <ScalarProperty Name="UsuarioAlta" ColumnName="UsuarioAlta" />
+          <ScalarProperty Name="FechaAlta" ColumnName="FechaAlta" />
+          <ScalarProperty Name="Estado" ColumnName="Estado" />
+          <ScalarProperty Name="Total" ColumnName="Total" />
+          <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+          <ScalarProperty Name="idCliente" ColumnName="idCliente" />
+          <ScalarProperty Name="idVendedor" ColumnName="idVendedor" />
+          <ScalarProperty Name="idVenta" ColumnName="idVenta" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="productosWithStock">
+      <EntityTypeMapping TypeName="bowtieModel.productosWithStock">
+        <MappingFragment StoreEntitySet="productosWithStock">
+          <ScalarProperty Name="PrecioGremio" ColumnName="PrecioGremio" />
+          <ScalarProperty Name="idStock" ColumnName="idStock" />
+          <ScalarProperty Name="Stock" ColumnName="Stock" />
+          <ScalarProperty Name="CodigoBarras" ColumnName="CodigoBarras" />
+          <ScalarProperty Name="PrecioContado" ColumnName="PrecioContado" />
+          <ScalarProperty Name="PrecioLista" ColumnName="PrecioLista" />
+          <ScalarProperty Name="Nombre" ColumnName="Nombre" />
           <ScalarProperty Name="idProducto" ColumnName="idProducto" />
         </MappingFragment>
       </EntityTypeMapping>

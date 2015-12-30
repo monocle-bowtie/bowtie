@@ -12,6 +12,7 @@ namespace SistAdmin.TransferObjects
         public int idCompraDetalle { get; set; }
         public int idProducto { get; set; }
         public string NombreProducto { get; set; }
+        public string CodigoBarras { get; set; }
         public int Cantidad { get; set; }
         public decimal PrecioUnitario { get; set; }
         public decimal PrecioTotal { get; set; }
@@ -20,5 +21,6 @@ namespace SistAdmin.TransferObjects
         public int UsuarioAlta { get; set; }
         public DateTime FechaBaja { get; set; }
         public int UsuarioBaja { get; set; }
+        
     }
 }

@@ -21,6 +21,7 @@ require.config({
         'datepicker': 'datepicker/bootstrap-datepicker',
         'moment': 'moment/moment',
         'date':'date/date',
+        'bootstrap-datepicker':'bootstrap-datepicker/bootstrap-datepicker',
         //Services
         'LoginService': '../app/services/login-service',
         'VentasService': '../app/services/ventas-service',
@@ -32,6 +33,8 @@ require.config({
         'CajaService': '../app/services/caja-service',
         'HomeService': '../app/services/home-service',
         'PromocionesService': '../app/services/promociones-service',
+        'MedioPagoService': '../app/services/medioPago-service',
+        'ConfigService': '../app/services/config-service',
         // directives
         'AutocompleteDirective': '../app/directives/autocomplete.directive',
         // Models
@@ -46,7 +49,8 @@ require.config({
             'angular-mocks':['angular'],
             'jquery-fittext': ['jquery'],
             'bootstrap': ['jquery'],
-            'datepicker': ['jquery']
+            'datepicker': ['jquery'],
+            'bootstrap-datepicker': ['jquery']
          },
     deps: ['app']
 });

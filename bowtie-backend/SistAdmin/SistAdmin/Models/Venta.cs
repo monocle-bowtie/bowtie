@@ -18,6 +18,7 @@ namespace SistAdmin.Models
         public Venta()
         {
             this.VentaDetalle = new HashSet<VentaDetalle>();
+            this.VentaPromoDetalle = new HashSet<VentaPromoDetalle>();
         }
     
         public int idVenta { get; set; }
@@ -32,6 +33,10 @@ namespace SistAdmin.Models
         public Nullable<int> UsuarioBaja { get; set; }
         public int idMedioPago { get; set; }
         public int idSucursal { get; set; }
+        public string NroTicket { get; set; }
+        public Nullable<decimal> TotalPromocion { get; set; }
+        public Nullable<int> idTarjeta { get; set; }
+        public Nullable<decimal> MontoPagado { get; set; }
         [JsonIgnore]
         public virtual Cliente Cliente { get; set; }
         [JsonIgnore]
@@ -42,5 +47,9 @@ namespace SistAdmin.Models
         public virtual Vendedor Vendedor { get; set; }
         [JsonIgnore]
         public virtual ICollection<VentaDetalle> VentaDetalle { get; set; }
+        [JsonIgnore]
+        public virtual ICollection<VentaPromoDetalle> VentaPromoDetalle { get; set; }
+        [JsonIgnore]
+        public virtual Tarjeta Tarjeta { get; set; }
     }
 }

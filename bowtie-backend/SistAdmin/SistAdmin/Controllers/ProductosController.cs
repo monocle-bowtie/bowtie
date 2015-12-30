@@ -1,4 +1,5 @@
 ﻿using SistAdmin.Models;
+using SistAdmin.TransferObjects;
 using SistAdmin.Services;
 using log4net;
 using System;
@@ -23,6 +24,25 @@ namespace SistAdmin.Controllers
             {
                 ProductoService service = (ProductoService)new ProductoService().setDatabase(db);
                 List<Producto> productos = service.getAll();
+
+
+
+                response = this.getSuccessResponse(productos);
+            }
+            catch (Exception e)
+            {
+                response = this.getErrorResponse(e);
+            }
+            return response;
+        }
+
+        public HttpResponseMessage GetwithStock()
+        {
+            HttpResponseMessage response;
+            try
+            {
+                ProductoService service = (ProductoService)new ProductoService().setDatabase(db);
+                List<productosWithStock> productos = service.getProdConStock();
 
 
 
@@ -64,6 +84,7 @@ namespace SistAdmin.Controllers
                 ProductoService service = (ProductoService)new ProductoService().setDatabase(db);
                 p.FechaAlta = DateTime.Today;
                 p.UsuarioAlta = 1;
+                p.Estado = "A";
                 p = service.saveOrUpdate(p);
 
                 response = this.getSuccessResponse(p);
@@ -85,7 +106,12 @@ namespace SistAdmin.Controllers
                 Producto p = service.find(id);
                 service.delete(id);
 
+                if (p.Estado == "D") { 
                 response = this.getSuccessResponse(p);
+                }
+                else {
+                    response = this.getSuccessResponse("No se puede eliminar porque existe una compra o hay stock disponible");
+                }
             }
             catch (Exception e)
             {

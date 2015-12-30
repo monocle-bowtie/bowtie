@@ -1,6 +1,6 @@
 define(['app'], function (app) {
-	app.factory('ComprasService',  ['$http', '$q', '$rootScope', '$resource',
-		function( $http, $q, $rootScope, $resource) {
+	app.factory('ComprasService',  ['$http', '$q', '$rootScope', '$resource', 'url',
+		function( $http, $q, $rootScope, $resource, url) {
 			var service = {};
 
 			service.getProveedores = getProveedores;
@@ -15,7 +15,7 @@ define(['app'], function (app) {
 	        	var callback = $q.defer();
         		$http({
 					  method: 'GET',
-					  url: 'http://ec2-52-11-118-155.us-west-2.compute.amazonaws.com/api/grupo/get'
+					  url: url.environment+'api/grupo/get'
 					}).then(function successCallback(response) 
 					{						
 			      		callback.resolve(response.data);
@@ -24,7 +24,7 @@ define(['app'], function (app) {
 	        }
 
 	        function saveCompra(compra) {
-	        	return $http.post("http://ec2-52-11-118-155.us-west-2.compute.amazonaws.com/api/Compra/post",
+	        	return $http.post(url.environment+'api/Compra/post',
 			        compra)
 			        .then(function (response) {
 			        	alert('La compra se guardó exitosamente');
@@ -36,7 +36,7 @@ define(['app'], function (app) {
 	        	var callback = $q.defer();
         		$http({
 					  method: 'GET',
-					  url: 'http://ec2-52-11-118-155.us-west-2.compute.amazonaws.com/api/proveedor/get'
+					  url: url.environment+'api/proveedor/get'
 					}).then(function successCallback(response) 
 					{						
 			      		callback.resolve(response.data);
@@ -48,7 +48,7 @@ define(['app'], function (app) {
 	        	var callback = $q.defer();
         		$http({
 					  method: 'GET',
-					  url: 'http://ec2-52-11-118-155.us-west-2.compute.amazonaws.com/api/MedioPago/get'
+					  url: url.environment+'api/MedioPago/get'
 					}).then(function successCallback(response) 
 					{						
 			      		callback.resolve(response.data);
@@ -60,7 +60,7 @@ define(['app'], function (app) {
 	        	var callback = $q.defer();
         		$http({
 					  method: 'GET',
-					  url: 'http://ec2-52-11-118-155.us-west-2.compute.amazonaws.com/api/productos/get'
+					  url: url.environment+'api/productos/get'
 					}).then(function successCallback(response) 
 					{						
 			      		callback.resolve(response.data);
