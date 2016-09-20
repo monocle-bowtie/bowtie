@@ -11,7 +11,6 @@ namespace SistAdmin.Models
 {
     using System;
     using System.Collections.Generic;
-    using Newtonsoft.Json;
     
     public partial class Stock
     {
@@ -24,7 +23,7 @@ namespace SistAdmin.Models
         public Nullable<System.DateTime> FechaBaja { get; set; }
         public Nullable<int> UsuarioBaja { get; set; }
         public Nullable<decimal> PrecioCosto { get; set; }
-        [JsonIgnore]
+    
         public virtual Producto Producto { get; set; }
     }
 }

@@ -11,7 +11,6 @@ namespace SistAdmin.Models
 {
     using System;
     using System.Collections.Generic;
-    using Newtonsoft.Json;
     
     public partial class Caja
     {
@@ -25,7 +24,7 @@ namespace SistAdmin.Models
         public Nullable<int> UsuarioBaja { get; set; }
         public Nullable<System.DateTime> FechaBaja { get; set; }
         public Nullable<decimal> Monto { get; set; }
-        [JsonIgnore]
+    
         public virtual Concepto Concepto { get; set; }
     }
 }

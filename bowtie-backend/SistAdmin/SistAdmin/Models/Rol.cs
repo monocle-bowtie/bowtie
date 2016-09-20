@@ -11,7 +11,6 @@ namespace SistAdmin.Models
 {
     using System;
     using System.Collections.Generic;
-    using Newtonsoft.Json;
     
     public partial class Rol
     {
@@ -29,11 +28,9 @@ namespace SistAdmin.Models
         public int UsuarioAlta { get; set; }
         public Nullable<System.DateTime> FechaBaja { get; set; }
         public Nullable<int> UsuarioBaja { get; set; }
-        [JsonIgnore]
+    
         public virtual ICollection<FuncionXRol> FuncionXRol { get; set; }
-        [JsonIgnore]
         public virtual ICollection<Novedad> Novedad { get; set; }
-        [JsonIgnore]
         public virtual ICollection<RolxUsuario> RolxUsuario { get; set; }
     }
 }

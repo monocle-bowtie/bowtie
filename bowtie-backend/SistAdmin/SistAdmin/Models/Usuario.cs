@@ -11,7 +11,6 @@ namespace SistAdmin.Models
 {
     using System;
     using System.Collections.Generic;
-    using Newtonsoft.Json;
     
     public partial class Usuario
     {
@@ -30,9 +29,8 @@ namespace SistAdmin.Models
         public string Estado { get; set; }
         public string Usuario1 { get; set; }
         public string login { get; set; }
-        [JsonIgnore]
+    
         public virtual ICollection<RolxUsuario> RolxUsuario { get; set; }
-        [JsonIgnore]
         public virtual Vendedor Vendedor { get; set; }
     }
 }

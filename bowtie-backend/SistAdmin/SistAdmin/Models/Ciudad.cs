@@ -11,7 +11,6 @@ namespace SistAdmin.Models
 {
     using System;
     using System.Collections.Generic;
-    using Newtonsoft.Json;
     
     public partial class Ciudad
     {
@@ -31,13 +30,10 @@ namespace SistAdmin.Models
         public int UsuarioAlta { get; set; }
         public Nullable<System.DateTime> FechaBaja { get; set; }
         public Nullable<int> UsuarioBaja { get; set; }
-        [JsonIgnore]
+    
         public virtual Provincia Provincia { get; set; }
-        [JsonIgnore]
         public virtual ICollection<Cliente> Cliente { get; set; }
-        [JsonIgnore]
         public virtual ICollection<Sucursal> Sucursal { get; set; }
-        [JsonIgnore]
         public virtual ICollection<Vendedor> Vendedor { get; set; }
     }
 }

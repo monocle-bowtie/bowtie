@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="bd74c8ec1bde4851aa1c4e67118f98f7" Name="Diagram1" ZoomLevel="57">
+      <Diagram DiagramId="bd74c8ec1bde4851aa1c4e67118f98f7" Name="Diagram1" ZoomLevel="83">
         <EntityTypeShape EntityType="bowtieModel.Ciudad" Width="1.5" PointX="1.5" PointY="24.75" IsExpanded="true" />
         <EntityTypeShape EntityType="bowtieModel.Cliente" Width="1.5" PointX="3.75" PointY="24.75" IsExpanded="true" />
         <EntityTypeShape EntityType="bowtieModel.CompraDetalle" Width="1.5" PointX="5.25" PointY="8.875" IsExpanded="true" />
@@ -55,8 +55,6 @@
         <EntityTypeShape EntityType="bowtieModel.Caja" Width="1.5" PointX="12.625" PointY="12.875" />
         <AssociationConnector Association="bowtieModel.FK_Table_ToTable" />
         <EntityTypeShape EntityType="bowtieModel.Parametrizacion" Width="1.5" PointX="3.375" PointY="0.75" />
-        <EntityTypeShape EntityType="bowtieModel.Promocion" Width="1.5" PointX="0.75" PointY="1" />
-        <AssociationConnector Association="bowtieModel.FK_PromocionProducto_ToTable" />
         <EntityTypeShape EntityType="bowtieModel.Tarjeta" Width="1.5" PointX="0.75" PointY="5" />
         <EntityTypeShape EntityType="bowtieModel.Venta" Width="1.5" PointX="11.625" PointY="30.5" />
         <AssociationConnector Association="bowtieModel.FK_Venta_ToTable_1" />
@@ -66,7 +64,9 @@
         <AssociationConnector Association="bowtieModel.FK_VentaDetalle_ToTable" />
         <AssociationConnector Association="bowtieModel.FK_VentaPromoDetalle_ToTable" />
         <AssociationConnector Association="bowtieModel.FK_Venta_ToTable_4" />
-        <EntityTypeShape EntityType="bowtieModel.productosWithStock" Width="1.5" PointX="5.375" PointY="0.75" />
+        <EntityTypeShape EntityType="bowtieModel.productosWithStock" Width="1.5" PointX="5.75" PointY="0.75" />
+        <EntityTypeShape EntityType="bowtieModel.Promocion" Width="1.5" PointX="0.75" PointY="1" />
+        <AssociationConnector Association="bowtieModel.FK_PromocionProducto_ToTable" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

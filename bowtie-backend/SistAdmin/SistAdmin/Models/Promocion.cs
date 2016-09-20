@@ -11,7 +11,6 @@ namespace SistAdmin.Models
 {
     using System;
     using System.Collections.Generic;
-    using Newtonsoft.Json;
     
     public partial class Promocion
     {
@@ -22,13 +21,14 @@ namespace SistAdmin.Models
     
         public int IdPromocion { get; set; }
         public string Descripcion { get; set; }
-        public Nullable<decimal> Precio { get; set; }
+        public Nullable<decimal> PrecioContado { get; set; }
         public string Estado { get; set; }
         public System.DateTime FechaAlta { get; set; }
         public int UsuarioAlta { get; set; }
         public Nullable<System.DateTime> FechaBaja { get; set; }
         public Nullable<int> UsuarioBaja { get; set; }
-        [JsonIgnore]
+        public Nullable<decimal> PrecioTarjeta { get; set; }
+    
         public virtual ICollection<PromocionProducto> PromocionProducto { get; set; }
     }
 }

@@ -230,12 +230,13 @@
     </Key>
     <Property Name="IdPromocion" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Descripcion" Type="varchar" MaxLength="50" />
-    <Property Name="Precio" Type="numeric" Precision="18" Scale="2" />
+    <Property Name="PrecioContado" Type="numeric" Precision="18" Scale="2" />
     <Property Name="Estado" Type="nchar" MaxLength="1" />
     <Property Name="FechaAlta" Type="datetime" Nullable="false" />
     <Property Name="UsuarioAlta" Type="int" Nullable="false" />
     <Property Name="FechaBaja" Type="datetime" />
     <Property Name="UsuarioBaja" Type="int" />
+    <Property Name="PrecioTarjeta" Type="numeric" Precision="18" Scale="2" />
   </EntityType>
   <EntityType Name="PromocionProducto">
     <Key>
@@ -441,7 +442,7 @@ warning 6002: The table/view 'Bowtie2.dbo.productosWithStock' does not have a pr
       <PropertyRef Name="idStock" />
     </Key>
     <Property Name="idProducto" Type="int" Nullable="false" />
-    <Property Name="Nombre" Type="varchar" MaxLength="100" />
+    <Property Name="Descripcion" Type="varchar" MaxLength="100" />
     <Property Name="PrecioLista" Type="numeric" Precision="18" Scale="2" />
     <Property Name="PrecioContado" Type="numeric" Precision="18" Scale="2" />
     <Property Name="PrecioGremio" Type="decimal" Precision="18" Scale="2" />
@@ -843,7 +844,7 @@ warning 6002: The table/view 'Bowtie2.dbo.productosWithStock' does not have a pr
     <EntitySet Name="productosWithStock" EntityType="Self.productosWithStock" store:Type="Views" store:Schema="dbo">
       <DefiningQuery>SELECT 
     [productosWithStock].[idProducto] AS [idProducto], 
-    [productosWithStock].[Nombre] AS [Nombre], 
+    [productosWithStock].[Descripcion] AS [Descripcion], 
     [productosWithStock].[PrecioLista] AS [PrecioLista], 
     [productosWithStock].[PrecioContado] AS [PrecioContado], 
     [productosWithStock].[PrecioGremio] AS [PrecioGremio], 

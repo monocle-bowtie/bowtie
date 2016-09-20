@@ -11,7 +11,6 @@ namespace SistAdmin.Models
 {
     using System;
     using System.Collections.Generic;
-    using Newtonsoft.Json;
     
     public partial class GrupoProducto
     {
@@ -28,7 +27,7 @@ namespace SistAdmin.Models
         public Nullable<System.DateTime> FechaBaja { get; set; }
         public Nullable<int> UsuarioBaja { get; set; }
         public Nullable<decimal> PorcentajeGrupo { get; set; }
-        [JsonIgnore]
+    
         public virtual ICollection<GrupoXProducto> GrupoXProducto { get; set; }
     }
 }

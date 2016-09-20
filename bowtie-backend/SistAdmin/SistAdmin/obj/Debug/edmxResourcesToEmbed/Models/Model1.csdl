@@ -625,11 +625,6 @@
       <End Role="Caja" EntitySet="Caja" />
     </AssociationSet>
     <EntitySet Name="Parametrizacion" EntityType="bowtieModel.Parametrizacion" />
-    <EntitySet Name="Promocion" EntityType="bowtieModel.Promocion" />
-    <AssociationSet Name="FK_PromocionProducto_ToTable" Association="bowtieModel.FK_PromocionProducto_ToTable">
-      <End Role="Promocion" EntitySet="Promocion" />
-      <End Role="PromocionProducto" EntitySet="PromocionProducto" />
-    </AssociationSet>
     <EntitySet Name="Tarjeta" EntityType="bowtieModel.Tarjeta" />
     <EntitySet Name="Venta" EntityType="bowtieModel.Venta" />
     <AssociationSet Name="FK_Venta_ToTable_1" Association="bowtieModel.FK_Venta_ToTable_1">
@@ -661,6 +656,11 @@
       <End Role="Venta" EntitySet="Venta" />
     </AssociationSet>
     <EntitySet Name="productosWithStock" EntityType="bowtieModel.productosWithStock" />
+    <EntitySet Name="Promocion" EntityType="bowtieModel.Promocion" />
+    <AssociationSet Name="FK_PromocionProducto_ToTable" Association="bowtieModel.FK_PromocionProducto_ToTable">
+      <End Role="Promocion" EntitySet="Promocion" />
+      <End Role="PromocionProducto" EntitySet="PromocionProducto" />
+    </AssociationSet>
   </EntityContainer>
   <EntityType Name="PromocionProducto">
     <Key>
@@ -873,32 +873,6 @@
     <Property Name="FechaBaja" Type="DateTime" Precision="3" />
     <Property Name="UsuarioBaja" Type="Int32" />
   </EntityType>
-  <EntityType Name="Promocion">
-    <Key>
-      <PropertyRef Name="IdPromocion" />
-    </Key>
-    <Property Name="IdPromocion" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="Descripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-    <Property Name="Precio" Type="Decimal" Precision="18" Scale="2" />
-    <Property Name="Estado" Type="String" MaxLength="1" FixedLength="true" Unicode="true" />
-    <Property Name="FechaAlta" Type="DateTime" Nullable="false" Precision="3" />
-    <Property Name="UsuarioAlta" Type="Int32" Nullable="false" />
-    <Property Name="FechaBaja" Type="DateTime" Precision="3" />
-    <Property Name="UsuarioBaja" Type="Int32" />
-    <NavigationProperty Name="PromocionProducto" Relationship="bowtieModel.FK_PromocionProducto_ToTable" FromRole="Promocion" ToRole="PromocionProducto" />
-  </EntityType>
-  <Association Name="FK_PromocionProducto_ToTable">
-    <End Type="bowtieModel.Promocion" Role="Promocion" Multiplicity="1" />
-    <End Type="bowtieModel.PromocionProducto" Role="PromocionProducto" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Promocion">
-        <PropertyRef Name="IdPromocion" />
-      </Principal>
-      <Dependent Role="PromocionProducto">
-        <PropertyRef Name="idPromocion" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <EntityType Name="Tarjeta">
     <Key>
       <PropertyRef Name="idTarjeta" />
@@ -1030,12 +1004,39 @@
       <PropertyRef Name="idStock" />
     </Key>
     <Property Name="idProducto" Type="Int32" Nullable="false" />
-    <Property Name="Nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Descripcion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
     <Property Name="PrecioLista" Type="Decimal" Precision="18" Scale="2" />
     <Property Name="PrecioContado" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="PrecioGremio" Type="Decimal" Precision="18" Scale="2" />
     <Property Name="CodigoBarras" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
     <Property Name="Stock" Type="Int32" />
     <Property Name="idStock" Type="Int32" Nullable="false" />
-    <Property Name="PrecioGremio" Type="Decimal" Precision="18" Scale="2" />
   </EntityType>
+  <EntityType Name="Promocion">
+    <Key>
+      <PropertyRef Name="IdPromocion" />
+    </Key>
+    <Property Name="IdPromocion" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Descripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="PrecioContado" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="Estado" Type="String" MaxLength="1" FixedLength="true" Unicode="true" />
+    <Property Name="FechaAlta" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="UsuarioAlta" Type="Int32" Nullable="false" />
+    <Property Name="FechaBaja" Type="DateTime" Precision="3" />
+    <Property Name="UsuarioBaja" Type="Int32" />
+    <Property Name="PrecioTarjeta" Type="Decimal" Precision="18" Scale="2" />
+    <NavigationProperty Name="PromocionProducto" Relationship="bowtieModel.FK_PromocionProducto_ToTable" FromRole="Promocion" ToRole="PromocionProducto" />
+  </EntityType>
+  <Association Name="FK_PromocionProducto_ToTable">
+    <End Type="bowtieModel.Promocion" Role="Promocion" Multiplicity="1" />
+    <End Type="bowtieModel.PromocionProducto" Role="PromocionProducto" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Promocion">
+        <PropertyRef Name="IdPromocion" />
+      </Principal>
+      <Dependent Role="PromocionProducto">
+        <PropertyRef Name="idPromocion" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
 </Schema>

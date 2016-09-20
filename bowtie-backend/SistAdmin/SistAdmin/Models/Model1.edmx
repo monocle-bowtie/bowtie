@@ -235,12 +235,13 @@
           </Key>
           <Property Name="IdPromocion" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Descripcion" Type="varchar" MaxLength="50" />
-          <Property Name="Precio" Type="numeric" Precision="18" Scale="2" />
+          <Property Name="PrecioContado" Type="numeric" Precision="18" Scale="2" />
           <Property Name="Estado" Type="nchar" MaxLength="1" />
           <Property Name="FechaAlta" Type="datetime" Nullable="false" />
           <Property Name="UsuarioAlta" Type="int" Nullable="false" />
           <Property Name="FechaBaja" Type="datetime" />
           <Property Name="UsuarioBaja" Type="int" />
+          <Property Name="PrecioTarjeta" Type="numeric" Precision="18" Scale="2" />
         </EntityType>
         <EntityType Name="PromocionProducto">
           <Key>
@@ -446,7 +447,7 @@ warning 6002: The table/view 'Bowtie2.dbo.productosWithStock' does not have a pr
             <PropertyRef Name="idStock" />
           </Key>
           <Property Name="idProducto" Type="int" Nullable="false" />
-          <Property Name="Nombre" Type="varchar" MaxLength="100" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="100" />
           <Property Name="PrecioLista" Type="numeric" Precision="18" Scale="2" />
           <Property Name="PrecioContado" Type="numeric" Precision="18" Scale="2" />
           <Property Name="PrecioGremio" Type="decimal" Precision="18" Scale="2" />
@@ -848,7 +849,7 @@ warning 6002: The table/view 'Bowtie2.dbo.productosWithStock' does not have a pr
           <EntitySet Name="productosWithStock" EntityType="Self.productosWithStock" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [productosWithStock].[idProducto] AS [idProducto], 
-    [productosWithStock].[Nombre] AS [Nombre], 
+    [productosWithStock].[Descripcion] AS [Descripcion], 
     [productosWithStock].[PrecioLista] AS [PrecioLista], 
     [productosWithStock].[PrecioContado] AS [PrecioContado], 
     [productosWithStock].[PrecioGremio] AS [PrecioGremio], 
@@ -1607,11 +1608,6 @@ warning 6002: The table/view 'Bowtie2.dbo.productosWithStock' does not have a pr
             <End Role="Caja" EntitySet="Caja" />
           </AssociationSet>
           <EntitySet Name="Parametrizacion" EntityType="bowtieModel.Parametrizacion" />
-          <EntitySet Name="Promocion" EntityType="bowtieModel.Promocion" />
-          <AssociationSet Name="FK_PromocionProducto_ToTable" Association="bowtieModel.FK_PromocionProducto_ToTable">
-            <End Role="Promocion" EntitySet="Promocion" />
-            <End Role="PromocionProducto" EntitySet="PromocionProducto" />
-          </AssociationSet>
           <EntitySet Name="Tarjeta" EntityType="bowtieModel.Tarjeta" />
           <EntitySet Name="Venta" EntityType="bowtieModel.Venta" />
           <AssociationSet Name="FK_Venta_ToTable_1" Association="bowtieModel.FK_Venta_ToTable_1">
@@ -1643,6 +1639,11 @@ warning 6002: The table/view 'Bowtie2.dbo.productosWithStock' does not have a pr
             <End Role="Venta" EntitySet="Venta" />
           </AssociationSet>
           <EntitySet Name="productosWithStock" EntityType="bowtieModel.productosWithStock" />
+          <EntitySet Name="Promocion" EntityType="bowtieModel.Promocion" />
+          <AssociationSet Name="FK_PromocionProducto_ToTable" Association="bowtieModel.FK_PromocionProducto_ToTable">
+            <End Role="Promocion" EntitySet="Promocion" />
+            <End Role="PromocionProducto" EntitySet="PromocionProducto" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="PromocionProducto">
           <Key>
@@ -1855,32 +1856,6 @@ warning 6002: The table/view 'Bowtie2.dbo.productosWithStock' does not have a pr
           <Property Name="FechaBaja" Type="DateTime" Precision="3" />
           <Property Name="UsuarioBaja" Type="Int32" />
         </EntityType>
-        <EntityType Name="Promocion">
-          <Key>
-            <PropertyRef Name="IdPromocion" />
-          </Key>
-          <Property Name="IdPromocion" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Descripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Precio" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="Estado" Type="String" MaxLength="1" FixedLength="true" Unicode="true" />
-          <Property Name="FechaAlta" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="UsuarioAlta" Type="Int32" Nullable="false" />
-          <Property Name="FechaBaja" Type="DateTime" Precision="3" />
-          <Property Name="UsuarioBaja" Type="Int32" />
-          <NavigationProperty Name="PromocionProducto" Relationship="bowtieModel.FK_PromocionProducto_ToTable" FromRole="Promocion" ToRole="PromocionProducto" />
-        </EntityType>
-        <Association Name="FK_PromocionProducto_ToTable">
-          <End Type="bowtieModel.Promocion" Role="Promocion" Multiplicity="1" />
-          <End Type="bowtieModel.PromocionProducto" Role="PromocionProducto" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Promocion">
-              <PropertyRef Name="IdPromocion" />
-            </Principal>
-            <Dependent Role="PromocionProducto">
-              <PropertyRef Name="idPromocion" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="Tarjeta">
           <Key>
             <PropertyRef Name="idTarjeta" />
@@ -2012,14 +1987,41 @@ warning 6002: The table/view 'Bowtie2.dbo.productosWithStock' does not have a pr
             <PropertyRef Name="idStock" />
           </Key>
           <Property Name="idProducto" Type="Int32" Nullable="false" />
-          <Property Name="Nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Descripcion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="PrecioLista" Type="Decimal" Precision="18" Scale="2" />
           <Property Name="PrecioContado" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="PrecioGremio" Type="Decimal" Precision="18" Scale="2" />
           <Property Name="CodigoBarras" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Stock" Type="Int32" />
           <Property Name="idStock" Type="Int32" Nullable="false" />
-          <Property Name="PrecioGremio" Type="Decimal" Precision="18" Scale="2" />
         </EntityType>
+        <EntityType Name="Promocion">
+          <Key>
+            <PropertyRef Name="IdPromocion" />
+          </Key>
+          <Property Name="IdPromocion" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Descripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PrecioContado" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Estado" Type="String" MaxLength="1" FixedLength="true" Unicode="true" />
+          <Property Name="FechaAlta" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UsuarioAlta" Type="Int32" Nullable="false" />
+          <Property Name="FechaBaja" Type="DateTime" Precision="3" />
+          <Property Name="UsuarioBaja" Type="Int32" />
+          <Property Name="PrecioTarjeta" Type="Decimal" Precision="18" Scale="2" />
+          <NavigationProperty Name="PromocionProducto" Relationship="bowtieModel.FK_PromocionProducto_ToTable" FromRole="Promocion" ToRole="PromocionProducto" />
+        </EntityType>
+        <Association Name="FK_PromocionProducto_ToTable">
+          <End Type="bowtieModel.Promocion" Role="Promocion" Multiplicity="1" />
+          <End Type="bowtieModel.PromocionProducto" Role="PromocionProducto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Promocion">
+              <PropertyRef Name="IdPromocion" />
+            </Principal>
+            <Dependent Role="PromocionProducto">
+              <PropertyRef Name="idPromocion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2432,20 +2434,6 @@ warning 6002: The table/view 'Bowtie2.dbo.productosWithStock' does not have a pr
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Promocion">
-            <EntityTypeMapping TypeName="bowtieModel.Promocion">
-              <MappingFragment StoreEntitySet="Promocion">
-                <ScalarProperty Name="UsuarioBaja" ColumnName="UsuarioBaja" />
-                <ScalarProperty Name="FechaBaja" ColumnName="FechaBaja" />
-                <ScalarProperty Name="UsuarioAlta" ColumnName="UsuarioAlta" />
-                <ScalarProperty Name="FechaAlta" ColumnName="FechaAlta" />
-                <ScalarProperty Name="Estado" ColumnName="Estado" />
-                <ScalarProperty Name="Precio" ColumnName="Precio" />
-                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
-                <ScalarProperty Name="IdPromocion" ColumnName="IdPromocion" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Tarjeta">
             <EntityTypeMapping TypeName="bowtieModel.Tarjeta">
               <MappingFragment StoreEntitySet="Tarjeta">
@@ -2484,14 +2472,29 @@ warning 6002: The table/view 'Bowtie2.dbo.productosWithStock' does not have a pr
           <EntitySetMapping Name="productosWithStock">
             <EntityTypeMapping TypeName="bowtieModel.productosWithStock">
               <MappingFragment StoreEntitySet="productosWithStock">
-                <ScalarProperty Name="PrecioGremio" ColumnName="PrecioGremio" />
                 <ScalarProperty Name="idStock" ColumnName="idStock" />
                 <ScalarProperty Name="Stock" ColumnName="Stock" />
                 <ScalarProperty Name="CodigoBarras" ColumnName="CodigoBarras" />
+                <ScalarProperty Name="PrecioGremio" ColumnName="PrecioGremio" />
                 <ScalarProperty Name="PrecioContado" ColumnName="PrecioContado" />
                 <ScalarProperty Name="PrecioLista" ColumnName="PrecioLista" />
-                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
                 <ScalarProperty Name="idProducto" ColumnName="idProducto" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Promocion">
+            <EntityTypeMapping TypeName="bowtieModel.Promocion">
+              <MappingFragment StoreEntitySet="Promocion">
+                <ScalarProperty Name="PrecioTarjeta" ColumnName="PrecioTarjeta" />
+                <ScalarProperty Name="UsuarioBaja" ColumnName="UsuarioBaja" />
+                <ScalarProperty Name="FechaBaja" ColumnName="FechaBaja" />
+                <ScalarProperty Name="UsuarioAlta" ColumnName="UsuarioAlta" />
+                <ScalarProperty Name="FechaAlta" ColumnName="FechaAlta" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="PrecioContado" ColumnName="PrecioContado" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="IdPromocion" ColumnName="IdPromocion" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

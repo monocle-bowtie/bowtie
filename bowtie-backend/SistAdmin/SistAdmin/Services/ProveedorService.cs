@@ -46,25 +46,14 @@ namespace SistAdmin.Services
         // DELETE api/ProveedorService/5
         public void delete(long id)
         {
-            Compra C = this.db.Compra.Where(c1 => c1.idProveedor == id).FirstOrDefault();
-            ProductoPrecio pp = this.db.ProductoPrecio.Where(pp1 => pp1.idProveedor == id).FirstOrDefault();
             Proveedor p = this.db.Proveedor.Find(id);
-            if (C == null && pp == null) 
-            { 
                 //this.db.Proveedor.Remove(p);
                 p.FechaBaja = DateTime.Today;
                 p.UsuarioBaja = 1;
                 p.Estado = "D";
                 db.Entry(p).State = EntityState.Modified;
                 this.save();
-            }
-            else
-            {
-                p.Estado = "A";
-                db.Entry(p).State = EntityState.Modified;
-                // this.db.Producto.Remove(p);
-                this.save();
-            }
+         
         }
     }
 }

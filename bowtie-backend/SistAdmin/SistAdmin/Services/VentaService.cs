@@ -78,8 +78,24 @@ namespace SistAdmin.Services
         public void delete(long id)
         {
             Venta v = this.db.Venta.Find(id);
-            this.db.Venta.Remove(v);
+            v.FechaBaja = DateTime.Today;
+            v.UsuarioBaja = 1;
+            v.Estado = "D";
+            db.Entry(v).State = EntityState.Modified;
             this.save();
+
+            foreach(VentaDetalle _v in v.VentaDetalle)
+            {
+                _v.FechaBaja = DateTime.Today;
+                _v.UsuarioBaja = 1;
+                _v.Estado = "D";
+                db.Entry(_v).State = EntityState.Modified;
+                this.save();
+                Stock s = this.db.Stock.Where(s1 => s1.idProducto == _v.idProducto).FirstOrDefault();
+                s.Cantidad = s.Cantidad + _v.Cantidad;
+                db.Entry(s).State = EntityState.Modified;
+                this.save();
+            }
         }
 
         public void RegistrarPreventa(ConfirmarPreventa CP)

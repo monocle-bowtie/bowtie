@@ -11,7 +11,6 @@ namespace SistAdmin.Models
 {
     using System;
     using System.Collections.Generic;
-    using Newtonsoft.Json;
     
     public partial class Compra
     {
@@ -31,11 +30,9 @@ namespace SistAdmin.Models
         public Nullable<int> UsuarioBaja { get; set; }
         public string NroFactura { get; set; }
         public Nullable<int> idMedioPago { get; set; }
-        [JsonIgnore]
+    
         public virtual Proveedor Proveedor { get; set; }
-        [JsonIgnore]
         public virtual ICollection<CompraDetalle> CompraDetalle { get; set; }
-        [JsonIgnore]
         public virtual MedioPago MedioPago { get; set; }
     }
 }

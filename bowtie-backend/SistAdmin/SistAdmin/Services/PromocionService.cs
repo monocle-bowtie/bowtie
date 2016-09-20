@@ -140,26 +140,17 @@ namespace SistAdmin.Services
         // DELETE api/<controller>/5
         public void delete(long id)
         {
-            PromocionProducto pp = this.db.PromocionProducto.Where(pp1 => pp1.idPromocion == id).FirstOrDefault();
+            
             
             Promocion p = this.db.Promocion.Find(id);
-            if (pp == null)
-            {
-
+            
                 p.FechaBaja = DateTime.Today;
                 p.UsuarioBaja = 1;
                 p.Estado = "D";
                 db.Entry(p).State = EntityState.Modified;
                 // this.db.Producto.Remove(p);
                 this.save();
-            }
-            else
-            {
-                p.Estado = "A";
-                db.Entry(p).State = EntityState.Modified;
-                // this.db.Producto.Remove(p);
-                this.save();
-            }
+            
         }
     }
 }

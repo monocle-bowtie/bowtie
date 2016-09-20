@@ -52,21 +52,14 @@ namespace SistAdmin.Services
         // DELETE api/<controller>/5
         public void delete(long id)
         {
-            Venta vta = this.db.Venta.Where(vta1 => vta1.idTarjeta == id).FirstOrDefault();
+            
             Tarjeta t = this.db.Tarjeta.Find(id);
 
-            if (vta == null)
-            { 
                 t.FechaBaja = DateTime.Today;
                 t.UsuarioBaja = 1;
                 t.Estado = "D";
                 db.Entry(t).State = EntityState.Modified;
-            }
-            else
-            {
-                t.Estado = "A";
-            }
-            // this.db.Producto.Remove(p);
+            
             this.save();
         }
     }

@@ -223,6 +223,37 @@ namespace SistAdmin.Services
         // DELETE api/<controller>/5
         public void Delete(int id)
         {
+            Compra c = this.db.Compra.Find(id);
+
+            c.FechaBaja = DateTime.Today;
+            c.UsuarioBaja = 1;
+            c.Estado = "D";
+            db.Entry(c).State = EntityState.Modified;
+            this.save();
+            List<CompraDetalle> cd = this.db.CompraDetalle.Where(cd1 => cd1.idCompra == id).ToList();
+
+            //recuperar el stock
+            foreach (CompraDetalle _cd in cd) { 
+            _cd.FechaBaja = DateTime.Today;
+            _cd.UsuarioBaja = 1;
+            _cd.Estado = "D";
+            db.Entry(_cd).State = EntityState.Modified;
+            this.save();
+            Stock s = this.db.Stock.Where(s1 => s1.idProducto == _cd.idProducto).FirstOrDefault();
+            s.Cantidad = s.Cantidad - _cd.Cantidad;
+            //Eliminar el precio de Costo
+            ProductoPrecio pp = this.db.ProductoPrecio.Where(pp1 => pp1.idProducto == _cd.idProducto && pp1.idProveedor == c.idProveedor).FirstOrDefault();
+            pp.FechaBaja = DateTime.Today;
+            pp.UsuarioBaja = 1;
+            pp.Estado = "D";
+            db.Entry(pp).State = EntityState.Modified;
+            this.save();
+
+            }
+
+            // sumar nuevamente el stock
+
+            this.save();
         }
     }
 }

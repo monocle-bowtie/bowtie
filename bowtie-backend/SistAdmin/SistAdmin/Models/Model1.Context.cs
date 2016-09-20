@@ -52,9 +52,9 @@ namespace SistAdmin.Models
         public virtual DbSet<VentaPromoDetalle> VentaPromoDetalle { get; set; }
         public virtual DbSet<Caja> Caja { get; set; }
         public virtual DbSet<Parametrizacion> Parametrizacion { get; set; }
-        public virtual DbSet<Promocion> Promocion { get; set; }
         public virtual DbSet<Tarjeta> Tarjeta { get; set; }
         public virtual DbSet<Venta> Venta { get; set; }
         public virtual DbSet<productosWithStock> productosWithStock { get; set; }
+        public virtual DbSet<Promocion> Promocion { get; set; }
     }
 }

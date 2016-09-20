@@ -52,25 +52,16 @@ namespace SistAdmin.Services
         public void delete(long id)
         {
             
-            Venta v = this.db.Venta.Where(v1 => v1.idCliente == id).FirstOrDefault();
+            
             Cliente c = this.db.Cliente.Find(id);
-            if (v == null)
-            {
-
-                c.FechaBaja = DateTime.Today;
-                c.UsuarioBaja = 1;
-                c.Estado = "D";
-                db.Entry(c).State = EntityState.Modified;
-                // this.db.Producto.Remove(p);
-                this.save();
-            }
-            else
-            {
-                c.Estado = "A";
-                db.Entry(c).State = EntityState.Modified;
-                // this.db.Producto.Remove(p);
-                this.save();
-            }
+           
+            c.FechaBaja = DateTime.Today;
+            c.UsuarioBaja = 1;
+            c.Estado = "D";
+            db.Entry(c).State = EntityState.Modified;
+            // this.db.Producto.Remove(p);
+            this.save();
+           
         }
     }
 }

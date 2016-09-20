@@ -11,17 +11,16 @@ namespace SistAdmin.Models
 {
     using System;
     using System.Collections.Generic;
-    using Newtonsoft.Json;
     
     public partial class productosWithStock
     {
         public int idProducto { get; set; }
-        public string Nombre { get; set; }
+        public string Descripcion { get; set; }
         public Nullable<decimal> PrecioLista { get; set; }
         public Nullable<decimal> PrecioContado { get; set; }
+        public Nullable<decimal> PrecioGremio { get; set; }
         public string CodigoBarras { get; set; }
         public Nullable<int> Stock { get; set; }
         public int idStock { get; set; }
-        public Nullable<decimal> PrecioGremio { get; set; }
     }
 }
