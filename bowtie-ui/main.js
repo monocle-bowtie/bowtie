@@ -1,7 +1,5 @@
 require.config({
-    
     baseUrl: "bower_components",
-    
     paths: {
         'app':'../app',
         'angular': 'angular/angular',
